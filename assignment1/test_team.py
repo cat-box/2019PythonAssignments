@@ -204,24 +204,6 @@ class TestTeam(TestCase):
         self.assertEqual(self.team.get_player(47).get_full_name(), "Yann Sauve")
 
 
-    def test_player_exists(self):
-        """ 080A: Valid _player_exists """
-        self.logPoint()
-        
-        self.team.add(self.forward)
-
-        self.assertTrue(self.team._player_exists(47), "Player")
-        self.assertFalse(self.team._player_exists(123))
-
-
-    def test_player_exists_invalid(self):
-        """ 080B: Invalid _player_exists() """
-        self.logPoint()
-        
-        self.assertRaisesRegex(ValueError, "Player ID cannot be undefined", self.team._player_exists, self.undefined_value)
-        self.assertRaisesRegex(ValueError, "Player ID cannot be empty", self.team._player_exists, self.empty_value)
-
-
     def tearDown(self):
         self.logPoint()
 
