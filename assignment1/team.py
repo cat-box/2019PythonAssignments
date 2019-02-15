@@ -1,5 +1,5 @@
 class Team:
-    """Team class
+    """Team Class
     """
 
     def __init__(self):
