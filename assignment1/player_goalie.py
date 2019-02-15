@@ -110,8 +110,13 @@ class PlayerGoalie(AbstractPlayer):
             losses (int): Value for player's number of losses
             games_played (int): Value for player's number of total games played
         """
+        self._validate_input(wins, "wins")
         self._games_won = wins
+
+        self._validate_input(losses, "losses")
         self._games_lost = losses
+
+        self._validate_input(games_played, "games_played")
         self._games_played = games_played
 
     

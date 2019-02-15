@@ -56,6 +56,7 @@ class AbstractPlayer:
         Args:
             id (int): Player id
         """
+        self._validate_input(id, "id")
         self._id = id
 
 
@@ -137,7 +138,7 @@ class AbstractPlayer:
         """Abstract method to be implemented by subclasses
         
         Raises:
-            NotImplementedError: 
+            NotImplementedError
         """
         raise NotImplementedError("Abstract method - must be implemented in subclass")
 
@@ -146,14 +147,14 @@ class AbstractPlayer:
         """Abstract method to be implemented by subclasses
         
         Raises:
-            NotImplementedError: 
+            NotImplementedError
         """
         raise NotImplementedError("Abstract method - must be implemented in subclass")
 
 
     @staticmethod
     def _validate_input(input, input_display):
-        """Private helper to validate inputs
+        """Private method to validate inputs
         
         Args:
             input: Input to be validated
