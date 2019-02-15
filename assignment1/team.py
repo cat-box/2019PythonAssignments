@@ -113,7 +113,6 @@ class Team:
 
         for index, player in enumerate(self._team_players, 0):
             if player.get_id() is player_id:
-                old_player = player
                 break
 
         self._team_players[index] = player_obj
