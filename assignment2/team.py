@@ -2,7 +2,7 @@ class Team:
     """Team Class
     """
 
-    def __init__(self, filepath):
+    def __init__(self):
         """Constructor method for Team
         """
         self._team_players = []
@@ -17,10 +17,24 @@ class Team:
 
         self._validate_object(player_obj)
 
-        if self._player_exists(player_obj.get_id()) is False:
+        player_id = self.create_id(player_obj)
+
+        if self._player_exists(player_id) is False:
             self._team_players.append(player_obj)
         
         return
+
+    def create_id(self, player_obj):
+        """ Creates an id for a player
+        
+        Returns:
+            int: id of a player object
+        """
+
+        player_id = id(player_obj)
+        player_obj.set_id(player_id)
+
+        return player_id
 
 
     def delete(self, player_id):
@@ -37,8 +51,9 @@ class Team:
             for player in self._team_players:
                 if player.get_id() is player_id:
                     self._team_players.remove(player)
+                    return
         
-        return
+        raise Exception("Player ID does not exist")
 
 
     def get_player(self, player_id):
@@ -127,7 +142,7 @@ class Team:
         Returns:
             (boolean): True if id does exist in list, False otherwise
         """
-        self._validate_parameter(player_id, "Player ID")
+        # self._validate_parameter(player_id, "Player ID")
 
         for player in self._team_players:
             if player.get_id() is player_id:
