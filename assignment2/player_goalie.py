@@ -7,7 +7,7 @@ class PlayerGoalie(AbstractPlayer):
     PLAYER_TYPE = "Goalie"
 
 
-    def __init__(self, id, fname, lname, height, weight, jersey_num, date_birth, year_joined, shots_against, goals_against, goals_saved, games_played, games_won, games_lost):
+    def __init__(self, fname, lname, height, weight, jersey_num, date_birth, year_joined, shots_against, goals_against, goals_saved, games_played, games_won, games_lost):
         """Constructor method for PlayerGoalie
         
         Args:
@@ -36,7 +36,7 @@ class PlayerGoalie(AbstractPlayer):
         self._validate_input(games_lost, "games_lost")
         self._games_lost = games_lost
 
-        super().__init__(id, fname, lname, height, weight, jersey_num, date_birth, year_joined)
+        super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined)
 
 
     def get_shots_against(self):
@@ -136,3 +136,29 @@ class PlayerGoalie(AbstractPlayer):
             PLAYER_TYPE (string): Player's type ("Goalie")
         """
         return self.PLAYER_TYPE
+
+
+    def to_dict(self):
+        """ Returns a Python dictionary representation of data held in player_goalie
+        
+        Returns:
+            dict: player details in dictionary format
+        """
+
+        player_details = {self._id: {}}
+
+        player_details[self._id]['fname'] = self._fname
+        player_details[self._id]['lname'] = self._lname
+        player_details[self._id]['height'] = self._height
+        player_details[self._id]['weight'] = self._weight
+        player_details[self._id]['jersey_num']  = self._jersey_num
+        player_details[self._id]['date_birth'] = self._date_birth
+        player_details[self._id]['year_joined'] = self._year_joined
+        player_details[self._id]['shots_against'] = self._shots_against
+        player_details[self._id]['goals_against'] = self._goals_against
+        player_details[self._id]['goals_saved'] = self._goals_saved
+        player_details[self._id]['games_played'] = self._games_played
+        player_details[self._id]['games_won'] = self._games_won
+        player_details[self._id]['games_lost'] = self._games_lost
+
+        return player_details

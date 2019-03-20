@@ -1,11 +1,16 @@
+import json
+
 class Team:
     """Team Class
     """
 
-    def __init__(self):
+    def __init__(self, filepath):
         """Constructor method for Team
         """
         self._team_players = []
+        self._filepath = filepath
+
+        self._read_player_from_file()
 
 
     def add(self, player_obj):
@@ -21,6 +26,7 @@ class Team:
 
         if self._player_exists(player_id) is False:
             self._team_players.append(player_obj)
+            return player_obj.get_id()
         
         return
 
@@ -149,6 +155,27 @@ class Team:
                 return True
             
         return False
+
+
+    def _read_player_from_file(self):
+        # TODO: When you EntityManager is constructed (i.e., __init__), this method will load the JSON Entity records from the file at _filepath into your list of entities (i.e., _entities instance variable).
+        #       Make sure it creates the correct type of Entity (SpecificEntity1 or SpecificEntity2).
+
+        with open(self._filepath) as player_file:
+            self._team_players = json.load(player_file)
+            print(len(self._team_players))
+
+        return
+
+
+    def _write_player_to_file(self):
+        # TODO: In any method that modifies an Entity object in your list of entities (i.e., _entities instance variable), this method is called.
+        #       The first thing this method will do is open the file at _filepath for writing (such that the existing data will be overwritten).
+        #       For each Entity record in _entities:
+        #           o It will call the to_dict() method to get the Python dictionary will all the attributes for the SpecificEntity
+        #           o It will serialize the Python dictionary to a JSON representation
+        #           o The JSON representation is written as a string to a single line in the file
+        pass
 
 
     @staticmethod

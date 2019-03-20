@@ -151,6 +151,16 @@ class AbstractPlayer:
         raise NotImplementedError("Abstract method - must be implemented in subclass")
 
 
+    def to_dict(self):
+        """Abstract method to be implemented by subclasses
+        
+        Raises:
+            NotImplementedError
+        """
+
+        raise NotImplementedError("Abstract method - must be implemented in subclass")
+
+
     @staticmethod
     def _validate_input(input, input_display):
         """Private method to validate inputs
