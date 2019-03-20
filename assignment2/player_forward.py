@@ -7,7 +7,7 @@ class PlayerForward(AbstractPlayer):
     PLAYER_TYPE = "Forward"
 
 
-    def __init__(self, fname, lname, height, weight, jersey_num, date_birth, year_joined, zone, shooting_hand, goals, assists, total_shots):
+    def __init__(self, fname, lname, height, weight, jersey_num, date_birth, year_joined, zone, shooting_hand, goals, assists, total_shots, player_type):
         """Constructor method for PlayerForward
         
         Args:
@@ -32,7 +32,7 @@ class PlayerForward(AbstractPlayer):
         self._validate_input(total_shots, "total_shots")
         self._total_shots = total_shots
 
-        super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined)
+        super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type)
 
 
     def get_zone(self):
@@ -118,5 +118,6 @@ class PlayerForward(AbstractPlayer):
         player_details[self._id]["goals"] = self._goals
         player_details[self._id]["assists"] = self._assists
         player_details[self._id]["total_shots"] = self._total_shots
+        player_details[self._id]["player_type"] = self._player_type
 
         return player_details

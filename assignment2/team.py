@@ -7,8 +7,10 @@ class Team:
     def __init__(self, filepath):
         """Constructor method for Team
         """
-        self._team_players = []
+        self._validate_parameter(filepath, "filepath")
         self._filepath = filepath
+
+        self._team_players = []
 
         self._read_player_from_file()
 
@@ -24,10 +26,13 @@ class Team:
 
         player_id = self.create_id(player_obj)
 
-        if self._player_exists(player_id) is False:
-            self._team_players.append(player_obj)
-            return player_obj.get_id()
-        
+        #if self._player_exists(player_id) is False:
+        #    self._team_players.append({"test":"abc"})
+        #    self._team_players.append(player_obj)
+        #    return player_obj.get_id()
+
+        print(self._team_players)
+
         return
 
     def create_id(self, player_obj):
@@ -36,6 +41,7 @@ class Team:
         Returns:
             int: id of a player object
         """
+        self._validate_object(player_obj)
 
         player_id = id(player_obj)
         player_obj.set_id(player_id)
@@ -151,9 +157,9 @@ class Team:
         # self._validate_parameter(player_id, "Player ID")
 
         for player in self._team_players:
-            if player.get_id() is player_id:
+            if player is player_id:
                 return True
-            
+
         return False
 
 
@@ -162,7 +168,11 @@ class Team:
         #       Make sure it creates the correct type of Entity (SpecificEntity1 or SpecificEntity2).
 
         with open(self._filepath) as player_file:
-            self._team_players = json.load(player_file)
+            players_obj = json.load(player_file)
+
+            for key, value in players_obj.items():
+                self._team_players.append({key: value})
+
             print(len(self._team_players))
 
         return
@@ -223,7 +233,7 @@ class Team:
             ValueError: If value is neither "Forward" or "Goalie"
         """
 
-        if (value is "Forward") or (value is "Goalie"):
+        if (value.lower() is "forward") or (value.lower() is "goalie"):
             return
         else:
             raise ValueError("Player Type must be Forward or Goalie")

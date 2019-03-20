@@ -3,17 +3,18 @@ class AbstractPlayer:
     """
 
 
-    def __init__(self, fname, lname, height, weight, jersey_num, date_birth, year_joined):
+    def __init__(self, fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type):
         """Constructor method for AbstractPlayer
         
         Args:
-            fname (string): Full name
+            fname (string): First name
             lname (string): Last name
             height (float): Height
             weight (float): Weight
             jersey_num (int): Jersey number
             date_birth (string): Date of birth
             year_joined (string): Year joined
+            player_type (string): Type of player
         """
 
         self._id = None
@@ -38,6 +39,9 @@ class AbstractPlayer:
 
         self._validate_input(year_joined, "year_joined")
         self._year_joined = year_joined
+
+        self._validate_player_type(player_type)
+        self._player_type = player_type
 
 
     def get_id(self):
@@ -178,3 +182,20 @@ class AbstractPlayer:
 
         if input == "":
             raise ValueError(input_display + " cannot be empty")
+
+
+    @staticmethod
+    def _validate_player_type(value):
+        """Private method to validate player type
+        
+        Args:
+            value (string): Type of player (either "Forward" or "Goalie")
+        
+        Raises:
+            ValueError: If value is neither "Forward" or "Goalie"
+        """
+
+        if (value.lower() is "forward") or (value.lower() is "goalie"):
+            return
+        else:
+            raise ValueError("Player Type must be Forward or Goalie")

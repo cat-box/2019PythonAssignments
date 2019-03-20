@@ -11,7 +11,8 @@
         "shooting_hand": "L",
         "goals": 8,
         "assists": 5,
-        "total_shots": 40
+        "total_shots": 40,
+        "player_type": "Forward"
     },
     "1179462639688": {
         "fname": "John",
@@ -25,6 +26,7 @@
         "shooting_hand": "R",
         "goals": 3,
         "assists": 5,
-        "total_shots": 65
+        "total_shots": 65,
+        "player_type": "Goalie"
     }
 }

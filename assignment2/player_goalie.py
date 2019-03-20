@@ -7,7 +7,7 @@ class PlayerGoalie(AbstractPlayer):
     PLAYER_TYPE = "Goalie"
 
 
-    def __init__(self, fname, lname, height, weight, jersey_num, date_birth, year_joined, shots_against, goals_against, goals_saved, games_played, games_won, games_lost):
+    def __init__(self, fname, lname, height, weight, jersey_num, date_birth, year_joined, shots_against, goals_against, goals_saved, games_played, games_won, games_lost, player_type):
         """Constructor method for PlayerGoalie
         
         Args:
@@ -36,7 +36,7 @@ class PlayerGoalie(AbstractPlayer):
         self._validate_input(games_lost, "games_lost")
         self._games_lost = games_lost
 
-        super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined)
+        super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type)
 
 
     def get_shots_against(self):
@@ -160,5 +160,6 @@ class PlayerGoalie(AbstractPlayer):
         player_details[self._id]['games_played'] = self._games_played
         player_details[self._id]['games_won'] = self._games_won
         player_details[self._id]['games_lost'] = self._games_lost
+        player_details[self._id]["player_type"] = self._player_type
 
         return player_details
