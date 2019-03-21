@@ -1,5 +1,5 @@
 from abstract_player import AbstractPlayer
-
+import json
 
 class PlayerGoalie(AbstractPlayer):
     """PlayerGoalie class
@@ -167,6 +167,7 @@ class PlayerGoalie(AbstractPlayer):
         player_details["player_type"] = self._player_type
 
         return player_details
+
 
     @staticmethod
     def _validate_player(value):

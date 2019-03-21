@@ -83,7 +83,7 @@ class Team:
         self._validate_parameter(player_id, "Player ID")
 
         for player in self._team_players:
-            if player.get_id() is player_id:
+            if player.get_id() == int(player_id):
                 return player
 
         return None
@@ -121,7 +121,7 @@ class Team:
 
         player_of_type = []
 
-        player_of_type = [player for player in self._team_players if player.get_type() is player_type]
+        player_of_type = [player for player in self._team_players if player.get_type() == player_type]
         
         return player_of_type
 
@@ -141,7 +141,7 @@ class Team:
             raise ValueError("Player ID does not already exist")
 
         for index, player in enumerate(self._team_players, 0):
-            if player.get_id() is player_id:
+            if player.get_id() == player_id:
                 break
 
         self._team_players[index] = player_obj
@@ -159,7 +159,7 @@ class Team:
         # self._validate_parameter(player_id, "Player ID")
 
         for player in self._team_players:
-            if player.get_id() is player_id:
+            if player.get_id() == player_id:
                 return True
 
         return False
@@ -218,12 +218,12 @@ class Team:
 
             player_file.write(json.dumps(player_dict, indent=4))
 
+
     def __repr__(self):
         length = "Length of list: %s" % (len(self._team_players))
         # ptype = (self._team_players[2])._player_type
         
         return "%s\n%s" % (length, self._team_players)
-
 
     @staticmethod
     def _validate_object(obj):
