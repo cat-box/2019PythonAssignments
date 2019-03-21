@@ -1,7 +1,7 @@
 {
     "Forward": [
         {
-            "id": 123456789,
+            "id": 2120288715048,
             "fname": "Sven",
             "lname": "Baertschi",
             "height": 180.34,
@@ -17,7 +17,7 @@
             "player_type": "Forward"
         },
         {
-            "id": 301294563,
+            "id": 2120288715104,
             "fname": "John",
             "lname": "Doe",
             "height": 123,
@@ -35,21 +35,21 @@
     ],
     "Goalie": [
         {
-            "id": 987654321,
-            "fname" : "Cathy",
-            "lname": "Chan",
-            "height": 456,
-            "weight": 789,
-            "jersey_num": 8,
-            "date_birth": "Mar 2, 1234",
-            "year_joined": 3023,
-            "shots_against": 5,
-            "goals_against": 6,
-            "goals_saved": 3,
-            "games_played": 5,
-            "games_won": 1,
-            "games_lost": 1,
-            "player_type": "goalie"
+            "id": 2120288715160,
+            "fname": "Bob",
+            "lname": "Smith",
+            "height": 321,
+            "weight": 100,
+            "jersey_num": 4,
+            "date_birth": "Jan 1, 1990",
+            "year_joined": "2000",
+            "shots_against": 123,
+            "goals_against": 432,
+            "goals_saved": 40,
+            "games_played": 20,
+            "games_won": 20,
+            "games_lost": 20,
+            "player_type": "Goalie"
         }
     ]
 }

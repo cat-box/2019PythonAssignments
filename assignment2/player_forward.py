@@ -107,21 +107,22 @@ class PlayerForward(AbstractPlayer):
         Returns:
             player_details (dictionary): Dictionary representation of Forward JSON
         """
-        player_details = {self._id: {}}
+        player_details = {}
 
-        player_details[self._id]["fname"] = self._fname
-        player_details[self._id]["lname"] = self._lname    
-        player_details[self._id]["height"] = self._height  
-        player_details[self._id]["weight"] = self._weight
-        player_details[self._id]["jersey_num"] = self._jersey_num    
-        player_details[self._id]["date_birth"] = self._date_birth
-        player_details[self._id]["year_joined"] = self._year_joined
-        player_details[self._id]["zone"] = self._zone
-        player_details[self._id]["shooting_hand"] = self._shooting_hand
-        player_details[self._id]["goals"] = self._goals
-        player_details[self._id]["assists"] = self._assists
-        player_details[self._id]["total_shots"] = self._total_shots
-        player_details[self._id]["player_type"] = self._player_type
+        player_details['id'] = self._id
+        player_details["fname"] = self._fname
+        player_details["lname"] = self._lname    
+        player_details["height"] = self._height  
+        player_details["weight"] = self._weight
+        player_details["jersey_num"] = self._jersey_num    
+        player_details["date_birth"] = self._date_birth
+        player_details["year_joined"] = self._year_joined
+        player_details["zone"] = self._zone
+        player_details["shooting_hand"] = self._shooting_hand
+        player_details["goals"] = self._goals
+        player_details["assists"] = self._assists
+        player_details["total_shots"] = self._total_shots
+        player_details["player_type"] = self._player_type
 
         return player_details
 

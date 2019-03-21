@@ -1,4 +1,5 @@
 import json
+import os
 from player_forward import PlayerForward
 from player_goalie import PlayerGoalie
 
@@ -30,7 +31,9 @@ class Team:
 
         if self._player_exists(player_id) is False:
             self._team_players.append(player_obj)
+            self._write_player_to_file()
             return player_obj.get_id()
+
 
         return
 
@@ -159,13 +162,15 @@ class Team:
             if player.get_id() is player_id:
                 return True
 
-        print("False")
         return False
 
 
     def _read_player_from_file(self):
         # TODO: When you EntityManager is constructed (i.e., __init__), this method will load the JSON Entity records from the file at _filepath into your list of entities (i.e., _entities instance variable).
         #       Make sure it creates the correct type of Entity (SpecificEntity1 or SpecificEntity2).
+
+        if not os.path.getsize(self._filepath):
+            return
 
         with open(self._filepath) as player_file:
             players_obj = json.load(player_file)
@@ -196,12 +201,26 @@ class Team:
         #           o It will call the to_dict() method to get the Python dictionary will all the attributes for the SpecificEntity
         #           o It will serialize the Python dictionary to a JSON representation
         #           o The JSON representation is written as a string to a single line in the file
-        pass
+        
+        with open(self._filepath, "w") as player_file:
+            player_dict = {
+                "Forward": [],
+                "Goalie": []
+            }
 
+            for player in self._team_players:
+                if type(player) is PlayerForward:
+                    player_dict['Forward'].append(player.to_dict())
+                elif type(player) is PlayerGoalie:
+                    player_dict['Goalie'].append(player.to_dict())
+                else:
+                    continue
+
+            player_file.write(json.dumps(player_dict, indent=4))
 
     def __repr__(self):
         length = "Length of list: %s" % (len(self._team_players))
-        ptype = (self._team_players[2])._player_type
+        # ptype = (self._team_players[2])._player_type
         
         return "%s\n%s" % (length, self._team_players)
 

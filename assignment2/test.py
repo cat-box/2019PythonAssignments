@@ -10,7 +10,12 @@ player3 = PlayerGoalie("Bob", "Smith", 321, 100, 4, "Jan 1, 1990", "2000", 123, 
 
 team = Team("C:\\Users\\cathy\\OneDrive\\Documents\\2019_SPRING\\2019PythonAssignments\\assignment2\\players.json")
 
+team.add(player1)
+team.add(player2)
 team.add(player3)
+
+
+
 #print(id((team.get_all_players())[0]))
 # team.delete(id(player2))
 
