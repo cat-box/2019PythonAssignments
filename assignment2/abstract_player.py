@@ -41,7 +41,6 @@ class AbstractPlayer:
         self._year_joined = year_joined
 
         self._validate_player_type(player_type)
-        self._player_type = player_type
 
 
     def get_id(self):
@@ -195,7 +194,7 @@ class AbstractPlayer:
             ValueError: If value is neither "Forward" or "Goalie"
         """
 
-        if (value.lower() is "forward") or (value.lower() is "goalie"):
+        if (value.lower() == "forward") or (value.lower() == "goalie"):
             return
         else:
             raise ValueError("Player Type must be Forward or Goalie")

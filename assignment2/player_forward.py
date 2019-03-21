@@ -32,6 +32,9 @@ class PlayerForward(AbstractPlayer):
         self._validate_input(total_shots, "total_shots")
         self._total_shots = total_shots
 
+        self._validate_player(player_type)
+        self._player_type = self.PLAYER_TYPE
+
         super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type)
 
 
@@ -121,3 +124,9 @@ class PlayerForward(AbstractPlayer):
         player_details[self._id]["player_type"] = self._player_type
 
         return player_details
+
+    
+    @staticmethod
+    def _validate_player(value):
+        if value.lower() != "forward":
+            raise ValueError("Player type must be Forward")

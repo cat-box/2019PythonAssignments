@@ -36,6 +36,9 @@ class PlayerGoalie(AbstractPlayer):
         self._validate_input(games_lost, "games_lost")
         self._games_lost = games_lost
 
+        self._validate_player(player_type)
+        self._player_type = self.PLAYER_TYPE
+
         super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type)
 
 
@@ -163,3 +166,8 @@ class PlayerGoalie(AbstractPlayer):
         player_details[self._id]["player_type"] = self._player_type
 
         return player_details
+
+    @staticmethod
+    def _validate_player(value):
+        if value.lower() != "goalie":
+            raise ValueError("Player type must be Goalie")

@@ -1,4 +1,6 @@
 import json
+from player_forward import PlayerForward
+from player_goalie import PlayerGoalie
 
 class Team:
     """Team Class
@@ -26,12 +28,9 @@ class Team:
 
         player_id = self.create_id(player_obj)
 
-        #if self._player_exists(player_id) is False:
-        #    self._team_players.append({"test":"abc"})
-        #    self._team_players.append(player_obj)
-        #    return player_obj.get_id()
-
-        print(self._team_players)
+        if self._player_exists(player_id) is False:
+            self._team_players.append(player_obj)
+            return player_obj.get_id()
 
         return
 
@@ -157,9 +156,10 @@ class Team:
         # self._validate_parameter(player_id, "Player ID")
 
         for player in self._team_players:
-            if player is player_id:
+            if player.get_id() is player_id:
                 return True
 
+        print("False")
         return False
 
 
@@ -171,9 +171,20 @@ class Team:
             players_obj = json.load(player_file)
 
             for key, value in players_obj.items():
-                self._team_players.append({key: value})
-
-            print(len(self._team_players))
+                if key.lower() == "forward":
+                    for i in value:
+                        player = PlayerForward(i['fname'], i['lname'], i['height'], i['weight'], i['jersey_num'], i['date_birth'],
+                                               i['year_joined'], i['zone'], i['shooting_hand'], i['goals'], i['assists'], i['total_shots'], i['player_type'])
+                        player.set_id(i['id'])
+                        self._team_players.append(player)
+                elif key.lower() == "goalie":
+                    for i in value:
+                        player = PlayerGoalie(i['fname'], i['lname'], i['height'], i['weight'], i['jersey_num'], i['date_birth'], i['year_joined'],
+                                              i['shots_against'], i['goals_against'], i['goals_saved'], i['games_played'], i['games_won'], i['games_lost'], i['player_type'])
+                        player.set_id(i['id'])
+                        self._team_players.append(player)
+                else:
+                    continue
 
         return
 
@@ -186,6 +197,13 @@ class Team:
         #           o It will serialize the Python dictionary to a JSON representation
         #           o The JSON representation is written as a string to a single line in the file
         pass
+
+
+    def __repr__(self):
+        length = "Length of list: %s" % (len(self._team_players))
+        ptype = (self._team_players[2])._player_type
+        
+        return "%s\n%s" % (length, self._team_players)
 
 
     @staticmethod
@@ -233,7 +251,7 @@ class Team:
             ValueError: If value is neither "Forward" or "Goalie"
         """
 
-        if (value.lower() is "forward") or (value.lower() is "goalie"):
+        if (value.lower() == "forward") or (value.lower() == "goalie"):
             return
         else:
             raise ValueError("Player Type must be Forward or Goalie")

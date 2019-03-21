@@ -1,32 +1,55 @@
 {
-    "2380120105032": {
-        "fname": "Sven",
-        "lname": "Baertschi",
-        "height": 180.34,
-        "weight": 190,
-        "jersey_num": 47,
-        "date_birth": "Oct 5, 1992",
-        "year_joined": "2011",
-        "zone": "LW",
-        "shooting_hand": "L",
-        "goals": 8,
-        "assists": 5,
-        "total_shots": 40,
-        "player_type": "Forward"
-    },
-    "1179462639688": {
-        "fname": "John",
-        "lname": "Doe",
-        "height": 123,
-        "weight": 23,
-        "jersey_num": 3,
-        "date_birth": "Sept 2, 2534",
-        "year_joined": "1234",
-        "zone": "WN",
-        "shooting_hand": "R",
-        "goals": 3,
-        "assists": 5,
-        "total_shots": 65,
-        "player_type": "Goalie"
-    }
+    "Forward": [
+        {
+            "id": 123456789,
+            "fname": "Sven",
+            "lname": "Baertschi",
+            "height": 180.34,
+            "weight": 190,
+            "jersey_num": 47,
+            "date_birth": "Oct 5, 1992",
+            "year_joined": "2011",
+            "zone": "LW",
+            "shooting_hand": "L",
+            "goals": 8,
+            "assists": 5,
+            "total_shots": 40,
+            "player_type": "Forward"
+        },
+        {
+            "id": 301294563,
+            "fname": "John",
+            "lname": "Doe",
+            "height": 123,
+            "weight": 23,
+            "jersey_num": 3,
+            "date_birth": "Sept 2, 2534",
+            "year_joined": "1234",
+            "zone": "WN",
+            "shooting_hand": "R",
+            "goals": 3,
+            "assists": 5,
+            "total_shots": 65,
+            "player_type": "Forward"
+        }
+    ],
+    "Goalie": [
+        {
+            "id": 987654321,
+            "fname" : "Cathy",
+            "lname": "Chan",
+            "height": 456,
+            "weight": 789,
+            "jersey_num": 8,
+            "date_birth": "Mar 2, 1234",
+            "year_joined": 3023,
+            "shots_against": 5,
+            "goals_against": 6,
+            "goals_saved": 3,
+            "games_played": 5,
+            "games_won": 1,
+            "games_lost": 1,
+            "player_type": "goalie"
+        }
+    ]
 }
