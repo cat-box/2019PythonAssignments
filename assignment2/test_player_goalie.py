@@ -11,7 +11,8 @@ class TestPlayerGoalie(TestCase):
     def setUp(self):
         self.logPoint()
         self.test_player_goalie = PlayerGoalie("Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-
+        self.none_value = None
+        self.empty_value = ""
 
     def test_player_goalie_valid(self):
         """ 010A: Valid values for constructor """
@@ -20,38 +21,38 @@ class TestPlayerGoalie(TestCase):
 
     def test_player_goalie_invalid_undefined(self):
         """ 010B: Invalid values for constructor """
-        self.assertRaisesRegex(ValueError, "fname cannot be undefined", PlayerGoalie, None, "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "lname cannot be undefined", PlayerGoalie, "Roberto", None, 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "height cannot be undefined", PlayerGoalie, "Roberto", "Luongo", None, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "weight cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, None, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "jersey_num cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, None, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "date_birth cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, None, 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "year_joined cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", None, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "shots_against cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, None, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "goals_against cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, None, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "goals_saved cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, None, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "games_played cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, None, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "games_won cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, None, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "games_lost cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, None, "Goalie")
-        self.assertRaisesRegex(ValueError, "Player type must be Goalie", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Defense")
+        self.assertRaisesRegex(ValueError, "fname cannot be undefined", PlayerGoalie, self.none_value, "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "lname cannot be undefined", PlayerGoalie, "Roberto", self.none_value, 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "height cannot be undefined", PlayerGoalie, "Roberto", "Luongo", self.none_value, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "weight cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, self.none_value, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "jersey_num cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, self.none_value, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "date_birth cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, self.none_value, 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "year_joined cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", self.none_value, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "shots_against cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, self.none_value, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "goals_against cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, self.none_value, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "goals_saved cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, self.none_value, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_played cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, self.none_value, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_won cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, self.none_value, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_lost cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, self.none_value, "Goalie")
+        self.assertRaisesRegex(ValueError, "player_type cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, self.none_value)
 
 
     def test_player_goalie_invalid_empty(self):
         """ 010C: Empty values for constructor """
-        self.assertRaisesRegex(ValueError, "fname cannot be empty", PlayerGoalie, "", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "lname cannot be empty", PlayerGoalie, "Roberto", "", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "height cannot be empty", PlayerGoalie, "Roberto", "Luongo", "", 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "weight cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, "", 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "jersey_num cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, "", "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "date_birth cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "year_joined cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", "", 788, 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "shots_against cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, "", 83, 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "goals_against cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, "", 705, 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "goals_saved cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, "", 30, 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "games_played cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, "", 12, 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "games_won cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, "", 13, "Goalie")
-        self.assertRaisesRegex(ValueError, "games_lost cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, "", "Goalie")
-        self.assertRaisesRegex(ValueError, "Player type must be Goalie", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "")
+        self.assertRaisesRegex(ValueError, "fname cannot be empty", PlayerGoalie, self.empty_value, "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "lname cannot be empty", PlayerGoalie, "Roberto", self.empty_value, 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "height cannot be empty", PlayerGoalie, "Roberto", "Luongo", self.empty_value, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "weight cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, self.empty_value, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "jersey_num cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, self.empty_value, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "date_birth cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, self.empty_value, 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "year_joined cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", self.empty_value, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "shots_against cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, self.empty_value, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "goals_against cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, self.empty_value, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "goals_saved cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, self.empty_value, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_played cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, self.empty_value, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_won cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, self.empty_value, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_lost cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, self.empty_value, "Goalie")
+        self.assertRaisesRegex(ValueError, "player_type cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, self.empty_value)
 
 
     def test_get_shots_against_valid(self):

@@ -33,24 +33,24 @@ class TestPlayerForward(TestCase):
         self.assertRaisesRegex(ValueError, "goals cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", self.none_value, 5, 40, "Forward")
         self.assertRaisesRegex(ValueError, "assists cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, self.none_value, 40, "Forward")
         self.assertRaisesRegex(ValueError, "total_shots cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, self.none_value, "Forward")
-        self.assertRaisesRegex(ValueError, "Player type must be Forward", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, self.none_value)
+        self.assertRaisesRegex(ValueError, "player_type cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, self.none_value)
 
 
     def test_player_forward_invalid_empty(self):
         """ 010C: Empty values for constructor """
-        self.assertRaisesRegex(ValueError, "fname cannot be empty", PlayerForward, "", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
-        self.assertRaisesRegex(ValueError, "lname cannot be empty", PlayerForward, "Sven", "", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
-        self.assertRaisesRegex(ValueError, "height cannot be empty", PlayerForward, "Sven", "Baertschi", "", 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
-        self.assertRaisesRegex(ValueError, "weight cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, "", 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
-        self.assertRaisesRegex(ValueError, "jersey_num cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, "", "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
-        self.assertRaisesRegex(ValueError, "date_birth cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "", "2011", "LW", "L", 8, 5, 40, "Forward")
-        self.assertRaisesRegex(ValueError, "year_joined cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "", "LW", "L", 8, 5, 40, "Forward")
-        self.assertRaisesRegex(ValueError, "zone cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "", "L", 8, 5, 40, "Forward")
-        self.assertRaisesRegex(ValueError, "shooting_hand cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "", 8, 5, 40, "Forward")
-        self.assertRaisesRegex(ValueError, "goals cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", "", 5, 40, "Forward")
-        self.assertRaisesRegex(ValueError, "assists cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, "", 40, "Forward")
-        self.assertRaisesRegex(ValueError, "total_shots cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, "", "Forward")
-        self.assertRaisesRegex(ValueError, "Player type must be Forward", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "")
+        self.assertRaisesRegex(ValueError, "fname cannot be empty", PlayerForward, self.empty_value, "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "lname cannot be empty", PlayerForward, "Sven", self.empty_value, 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "height cannot be empty", PlayerForward, "Sven", "Baertschi", self.empty_value, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "weight cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, self.empty_value, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "jersey_num cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, self.empty_value, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "date_birth cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, self.empty_value, "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "year_joined cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", self.empty_value, "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "zone cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", self.empty_value, "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "shooting_hand cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", self.empty_value, 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "goals cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", self.empty_value, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "assists cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, self.empty_value, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "total_shots cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, self.empty_value, "Forward")
+        self.assertRaisesRegex(ValueError, "player_type cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, self.empty_value)
 
 
     def test_get_zone(self):

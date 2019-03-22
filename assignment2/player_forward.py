@@ -139,5 +139,11 @@ class PlayerForward(AbstractPlayer):
             ValueError: If value is not "forward"
         """
 
+        if value is None:
+            raise ValueError("player_type cannot be undefined")
+
+        if value is "":
+            raise ValueError("player_type cannot be empty")
+
         if value.lower() != "forward":
-            raise ValueError("Player type must be Forward")
+            raise ValueError("player_type must be Forward")

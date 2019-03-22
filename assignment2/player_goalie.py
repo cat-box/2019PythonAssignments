@@ -180,5 +180,11 @@ class PlayerGoalie(AbstractPlayer):
             ValueError: If value is not "goalie"
         """
 
+        if value is None:
+            raise ValueError("player_type cannot be undefined")
+
+        if value is "":
+            raise ValueError("player_type cannot be empty")
+
         if value.lower() != "goalie":
-            raise ValueError("Player type must be Goalie")
+            raise ValueError("player_type must be Goalie")
