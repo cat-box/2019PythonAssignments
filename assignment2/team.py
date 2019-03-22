@@ -63,8 +63,9 @@ class Team:
 
         if self._player_exists(player_id) is True:
             for player in self._team_players:
-                if player.get_id() is player_id:
+                if player.get_id() == player_id:
                     self._team_players.remove(player)
+                    self._write_player_to_file()
                     return
         
         raise Exception("Player ID does not exist")

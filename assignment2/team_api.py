@@ -1,5 +1,3 @@
-
-
 from flask import Flask, request
 import json
 from team import Team
@@ -89,21 +87,23 @@ def update_player(player_id):
 
     return response
 
-@app.route("/team/players/<int:id>", methods=["DELETE"])
-def remove_player(id):
+@app.route("/team/players/<int:player_id>", methods=["DELETE"])
+def remove_player(player_id):
     """ Removes player """
-    #try:
-    #    team.delete(id)
+    try:
+        team.delete(player_id)
 
+        response = app.response_class(
+            status=200
+        )
 
-    #except:
-    #    response = app.response_class(
-    #        status=400,
-    #        response="Player is invalid"
-    #    )
+    except Exception as e:
+        response = app.response_class(
+            status=404,
+            response=str(e)
+        )
 
-    #return response
-    pass
+    return response
 
 
 @app.route("/team/players/<int:id>", methods=["GET"])

@@ -10,11 +10,11 @@ player3 = PlayerGoalie("Bob", "Smith", 321, 100, 4, "Jan 1, 1990", "2000", 123, 
 
 team = Team("./players.json")
 
-team.add(player1)
-team.add(player2)
-team.add(player3)
+#team.add(player1)
+#team.add(player2)
+#team.add(player3)
 
-
+#player3_id = player3.get_id()
 
 #print(id((team.get_all_players())[0]))
 # team.delete(id(player2))
@@ -23,15 +23,9 @@ team.add(player3)
 #player1 = player_list[0]
 #print(player1.to_dict())
 
-#team.add(player3)
-
-
 #print(json.dumps((team.get_all_players())["2380120105032"], indent=4))
 
-
-all = team.get_all_players()
-
-#print(all)
+team.delete(2101412049304)
 
 #print(repr(team))
 
