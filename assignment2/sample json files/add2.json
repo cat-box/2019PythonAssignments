@@ -1,0 +1,16 @@
+{
+    "fname": "Thatcher",
+    "lname": "Demko",
+    "height": 195.07,
+    "weight": 192,
+    "jersey_num": 35,
+    "date_birth": "Dec 8, 1995",
+    "year_joined": 2018,
+    "shots_against": 145,
+    "goals_against": 4,
+    "goals_saved": 131,
+    "games_played": 5,
+    "games_won": 2,
+    "games_lost": 2,
+    "player_type": "Goalie"
+}

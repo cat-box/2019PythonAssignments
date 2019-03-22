@@ -145,7 +145,7 @@ class PlayerGoalie(AbstractPlayer):
         """ Returns a Python dictionary representation of data held in player_goalie
         
         Returns:
-            dict: player details in dictionary format
+            player_details (dictionary): Player details in dictionary format
         """
 
         player_details = {}
@@ -171,5 +171,14 @@ class PlayerGoalie(AbstractPlayer):
 
     @staticmethod
     def _validate_player(value):
+        """Private method to validate player_type
+        
+        Args:
+            value (string): Type of player 
+        
+        Raises:
+            ValueError: If value is not "goalie"
+        """
+
         if value.lower() != "goalie":
             raise ValueError("Player type must be Goalie")

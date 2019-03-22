@@ -14,68 +14,99 @@ class TestPlayerGoalie(TestCase):
 
 
     def test_player_goalie_valid(self):
-        """ 000A: Valid values for constructor """
+        """ 010A: Valid values for constructor """
         self.assertIsNotNone(self.test_player_goalie)
 
 
     def test_player_goalie_invalid_undefined(self):
-        """ 000B: Invalid values (undefined) for constructor """
+        """ 010B: Invalid values for constructor """
         self.assertRaisesRegex(ValueError, "fname cannot be undefined", PlayerGoalie, None, "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "lname cannot be undefined", PlayerGoalie, "Roberto", None, 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "height cannot be undefined", PlayerGoalie, "Roberto", "Luongo", None, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "weight cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, None, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "jersey_num cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, None, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "date_birth cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, None, 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "year_joined cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", None, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "shots_against cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, None, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "goals_against cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, None, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "goals_saved cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, None, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_played cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, None, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_won cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, None, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_lost cannot be undefined", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, None, "Goalie")
+        self.assertRaisesRegex(ValueError, "Player type must be Goalie", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Defense")
+
+
+    def test_player_goalie_invalid_empty(self):
+        """ 010C: Empty values for constructor """
+        self.assertRaisesRegex(ValueError, "fname cannot be empty", PlayerGoalie, "", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "lname cannot be empty", PlayerGoalie, "Roberto", "", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "height cannot be empty", PlayerGoalie, "Roberto", "Luongo", "", 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "weight cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, "", 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "jersey_num cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, "", "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "date_birth cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "", 1997, 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "year_joined cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", "", 788, 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "shots_against cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, "", 83, 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "goals_against cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, "", 705, 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "goals_saved cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, "", 30, 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_played cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, "", 12, 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_won cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, "", 13, "Goalie")
+        self.assertRaisesRegex(ValueError, "games_lost cannot be empty", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, "", "Goalie")
+        self.assertRaisesRegex(ValueError, "Player type must be Goalie", PlayerGoalie, "Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "")
 
 
     def test_get_shots_against_valid(self):
-        """ 010A: Valid return for get_shots_against() """
+        """ 020A: Valid return for get_shots_against() """
         self.assertEqual(self.test_player_goalie.get_shots_against(), 788)
 
 
     def test_get_goals_against_valid(self):
-        """ 020A: Valid return for get_goals_against() """
+        """ 030A: Valid return for get_goals_against() """
         self.assertEqual(self.test_player_goalie.get_goals_against(), 83)
 
 
     def test_get_goals_saved_valid(self):
-        """ 030A: Valid return for get_goals_saved() """
+        """ 040A: Valid return for get_goals_saved() """
         self.assertEqual(self.test_player_goalie.get_goals_saved(), 705)
         
 
     def test_get_games_played(self):
-        """ 040A: Valid return for get_games_played() """
+        """ 050A: Valid return for get_games_played() """
         self.assertEqual(self.test_player_goalie.get_games_played(), 30)
 
     
     def test_get_games_won(self):
-        """ 050A: Valid return for get_games_won() """
+        """ 060A: Valid return for get_games_won() """
         self.assertEqual(self.test_player_goalie.get_games_won(), 12)
 
     
     def test_get_games_lost(self):
-        """ 060A: Valid return for get_games_lost() """
+        """ 070A: Valid return for get_games_lost() """
         self.assertEqual(self.test_player_goalie.get_games_lost(), 13)
 
 
     def test_get_win_loss_stats(self):
-        """ 070A: Valid return for get_win_loss_stats() """
+        """ 080A: Valid return for get_win_loss_stats() """
         self.assertEqual(self.test_player_goalie.get_win_loss_stats(), [12, 13, 30])
     
 
     def test_set_win_loss_stats(self):
-        """ 080A: Valid modification of values """
+        """ 090A: Valid modification of values """
         self.test_player_goalie.set_win_loss_stats(13, 15, 33)
         self.assertEqual(self.test_player_goalie.get_win_loss_stats(), [13, 15, 33])
 
 
     def test_get_stats(self):
-        """ 090A: Valid return of get_stats() """
+        """ 100A: Valid return of get_stats() """
         self.assertEqual(self.test_player_goalie.get_stats(), [788, 83, 705])
 
 
     def test_get_type(self):
-        """ 100A: Valid return of get_type() """
+        """ 110A: Valid return of get_type() """
         self.assertEqual(self.test_player_goalie.get_type(), "Goalie")
 
 
     def test_to_dict_valid(self):
-        """ 110A: Valid to_dict() """
+        """ 120A: Valid to_dict() """
         test_dict = self.test_player_goalie.to_dict()
 
         self.assertEquals(test_dict["fname"], "Roberto", "fname must be Roberto")

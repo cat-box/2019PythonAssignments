@@ -58,6 +58,9 @@ class AbstractPlayer:
         Args:
             player_id (int): id of a player object
         """
+
+        self._validate_input(player_id, "Player ID")
+
         self._id = player_id
         return
 

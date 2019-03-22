@@ -1,17 +1,28 @@
 import unittest
 from unittest import TestCase
+from unittest.mock import MagicMock
+from unittest.mock import patch, mock_open
 from team import Team
 from player_forward import PlayerForward
 from player_goalie import PlayerGoalie
 import inspect
+import json
 
 class TestTeam(TestCase):
     """ Unit Tests for the Team Class """
 
+    TEST_PLAYERS = {
+        "Forward": [],
+        "Goalie": []
+    }
 
+    @patch('builtins.open', mock_open(read_data='1'))
     def setUp(self):
+        """ Creates test fixture """
         self.logPoint()
-        self.team = Team("./test_players.json")
+
+        json.load = MagicMock(return_value=TestTeam.TEST_PLAYERS)
+        self.team = Team("test_players.json")
         
         self.forward = PlayerForward("Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "forward")
         self.forward_id = id(self.forward)
@@ -28,26 +39,21 @@ class TestTeam(TestCase):
     def test_team(self):
         """ 010A: Valid Construction """
 
-        self.logPoint()
-
         self.assertIsNotNone(self.team, "Team must be defined")
 
 
     def test_add(self):
         """ 020A: Valid Add Player """
-        
-        self.logPoint()
 
         self.assertIsNotNone(self.forward, "Player must be defined")
 
-        self.team.add(self.forward)
+        returned_id = self.team.add(self.forward)
+        self.assertEqual(returned_id, self.forward_id, "Player must have id %s" % self.forward_id)
         self.assertEqual(len(self.team.get_all_players()), 1, "Team must have 1 player")
 
 
     def test_add_undefined(self):
         """ 020B: Invalid Add Player """
-
-        self.logPoint()
 
         undefined_player = None
         self.assertRaisesRegex(ValueError, "Player must be defined", self.team.add, undefined_player)
@@ -55,8 +61,6 @@ class TestTeam(TestCase):
 
     def test_add_player_already_exists(self):
         """ 020C: Invalid Add Player - Player Already Exists """
-
-        self.logPoint()
 
         self.assertEqual(len(self.team.get_all_players()), 0, "Team must have no players")
 
@@ -70,23 +74,19 @@ class TestTeam(TestCase):
     def test_delete(self):
         """ 030A: Valid Delete Player """
 
-        self.logPoint()
-
         self.team.add(self.forward)
 
         player_list = self.team.get_all_players()
 
         self.assertEqual(len(player_list), 1, "Team must have 1 player")
-        self.assertEqual(player_list[0].get_id(), 47)
+        self.assertEqual(player_list[0].get_id(), self.forward_id)
 
-        self.team.delete(47)
+        self.team.delete(self.forward_id)
         self.assertEqual(len(self.team.get_all_players()), 0, "Team must have no players")
 
 
     def test_delete_invalid_player_id(self):
         """ 030B: Invalid Delete Player Parameters """
-
-        self.logPoint()
 
         self.assertRaisesRegex(ValueError, "Player ID cannot be undefined", self.team.delete, self.undefined_value)
         self.assertRaisesRegex(ValueError, "Player ID cannot be empty", self.team.delete, self.empty_value)
@@ -95,28 +95,24 @@ class TestTeam(TestCase):
     def test_delete_non_existent_player(self):
         """ 030C: Invalid Delete Player - Player is Non-Existent """
 
-        self.logPoint()
-
         self.team.add(self.forward)
 
         player_list = self.team.get_all_players()
 
         self.assertEqual(len(player_list), 1, "Team must have 1 player")
-        self.assertEqual(player_list[0].get_id(), 47)
+        self.assertEqual(player_list[0].get_id(), self.forward_id)
 
-        self.team.delete(99)
+        self.assertRaisesRegex(ValueError, "Player ID does not exist", self.team.delete, self.goalie_id)
         self.assertEqual(len(self.team.get_all_players()), 1, "Team must have 1 player")
 
 
     def test_get_player(self):
         """ 040A: Valid Get Player """
 
-        self.logPoint()
-
         self.team.add(self.forward)
         
-        retrieved_player = self.team.get_player(47)
-        self.assertEqual(retrieved_player.get_id(), 47, "Player must have player ID 47")
+        retrieved_player = self.team.get_player(self.forward_id)
+        self.assertEqual(retrieved_player.get_id(), self.forward_id, "Player must have player ID %s" % (self.forward_id))
         self.assertEqual(retrieved_player.get_zone(), "LW", "Player must have zone LW")
         self.assertEqual(retrieved_player.get_stats(), [8, 5, 40], "Player must have stats [8, 5, 40]")
 
@@ -124,16 +120,12 @@ class TestTeam(TestCase):
     def test_get_player_invalid_player_id(self):
         """ 040B: Invalid Get Player Parameters """
 
-        self.logPoint()
-
         self.assertRaisesRegex(ValueError, "Player ID cannot be undefined", self.team.get_player, self.undefined_value)
         self.assertRaisesRegex(ValueError, "Player ID cannot be empty", self.team.get_player, self.empty_value)
 
 
     def test_get_player_non_existent(self):
         """ 040C: Invalid Get Player - Player is Non-Existent"""
-
-        self.logPoint()
 
         self.team.add(self.forward)
         self.team.add(self.goalie)
@@ -143,7 +135,7 @@ class TestTeam(TestCase):
 
     def test_get_all_players(self):
         """ 050A: Valid get_all_players() """
-        self.logPoint()
+
         self.team.add(self.forward)
         self.team.add(self.goalie)
 
@@ -151,12 +143,12 @@ class TestTeam(TestCase):
 
         self.assertEqual(len(list_players), 2)
         self.assertEqual(list_players[0].get_fname(), "Sven", "Player must have first name 'Sven'")
-        self.assertEqual(list_players[1].get_id(), 1, "Player must have id '1'")
+        self.assertEqual(list_players[1].get_id(), self.goalie_id, "Player must have id %s" % self.goalie_id)
 
 
     def test_get_all_players_invalid(self):
         """ 050B: Invalid get_all_players() """
-        self.logPoint()
+ 
         list_players = self.team.get_all_players()
         
         # Check empty list
@@ -170,8 +162,6 @@ class TestTeam(TestCase):
 
     def test_get_all_by_type(self):
         """ 060A: Valid Get all by Type """
-
-        self.logPoint()
 
         self.team.add(self.forward)
         self.team.add(self.goalie)
@@ -188,8 +178,6 @@ class TestTeam(TestCase):
 
     def test_get_all_by_type_invalid_player_type(self):
         """ 060B: Invalid Get all by Type Parameters """
-
-        self.logPoint()
         
         self.assertRaisesRegex(ValueError, "Player Type cannot be undefined", self.team.get_all_by_type, self.undefined_value)
         self.assertRaisesRegex(ValueError, "Player Type cannot be empty", self.team.get_all_by_type, self.empty_value)
@@ -198,8 +186,6 @@ class TestTeam(TestCase):
     
     def test_update(self):
         """ 070A: Valid Update """
-
-        self.logPoint()
 
         self.team.add(self.forward)
         self.team.add(self.goalie)

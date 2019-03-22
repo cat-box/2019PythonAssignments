@@ -87,6 +87,7 @@ def update_player(player_id):
 
     return response
 
+
 @app.route("/team/players/<int:player_id>", methods=["DELETE"])
 def remove_player(player_id):
     """ Removes player """
@@ -106,11 +107,11 @@ def remove_player(player_id):
     return response
 
 
-@app.route("/team/players/<int:id>", methods=["GET"])
-def get_player(id):
-    """ Gets player by id """
+@app.route("/team/players/<int:player_id>", methods=["GET"])
+def get_player(player_id):
+    """ Gets player by player_id """
     try:
-        player = team.get_player(id)
+        player = team.get_player(player_id)
         
         response = app.response_class(
             status=200,
@@ -149,7 +150,7 @@ def get_all_players():
 def get_players_of_type(player_type):
     """ Gets all players of a type """
     try:
-        players_of_type = team.get_all_by_type(player_type)
+        players_of_type = team.get_all_by_type(player_type.lower())
 
         player_list = []
 

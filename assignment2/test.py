@@ -25,7 +25,11 @@ team = Team("./players.json")
 
 #print(json.dumps((team.get_all_players())["2380120105032"], indent=4))
 
-team.delete(2101412049304)
+team.add(player1)
+
+print(team)
+
+#team.delete(2101412049304)
 
 #print(repr(team))
 

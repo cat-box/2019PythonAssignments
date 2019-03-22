@@ -1,0 +1,15 @@
+{
+    "fname": "Jay",
+    "lname": "Beagle",
+    "height": 192.02,
+    "weight": 210,
+    "jersey_num": 83,
+    "date_birth": "Oct 16, 1985",
+    "year_joined": "2018",
+    "zone": "C",
+    "shooting_hand": "R",
+    "goals": 3,
+    "assists": 8,
+    "total_shots": 11,
+    "player_type": "forward"
+}

@@ -103,7 +103,7 @@ class PlayerForward(AbstractPlayer):
 
     
     def to_dict(self):
-        """Returns dictionary representing JSON object of Forward
+        """Returns dictionary representation of JSON object (PlayerForward)
         
         Returns:
             player_details (dictionary): Dictionary representation of Forward JSON
@@ -130,5 +130,14 @@ class PlayerForward(AbstractPlayer):
     
     @staticmethod
     def _validate_player(value):
+        """Private method to validate player_type
+        
+        Args:
+            value (string): Type of player
+        
+        Raises:
+            ValueError: If value is not "forward"
+        """
+
         if value.lower() != "forward":
             raise ValueError("Player type must be Forward")

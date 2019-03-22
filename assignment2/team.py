@@ -10,6 +10,7 @@ class Team:
     def __init__(self, filepath):
         """Constructor method for Team
         """
+
         self._validate_parameter(filepath, "filepath")
         self._filepath = filepath
 
@@ -20,9 +21,14 @@ class Team:
 
     def add(self, player_obj):
         """Adds player to list of team players if id doesn't exist in list
-        
+           Generates an id for the player on successful add, then returns that id
+           Then, writes a dictionary representation of the player to file
+
         Args:
             player_obj (PlayerForward or PlayerGoalie): Either a forward or goalie class
+        
+        Returns:
+            _id (int): id that is generated on successful add
         """
 
         self._validate_object(player_obj)
@@ -34,15 +40,16 @@ class Team:
             self._write_player_to_file()
             return player_obj.get_id()
 
-
         return
+
 
     def create_id(self, player_obj):
         """ Creates an id for a player
         
         Returns:
-            int: id of a player object
+            player_id (int): id of a player object
         """
+
         self._validate_object(player_obj)
 
         player_id = id(player_obj)
@@ -57,6 +64,9 @@ class Team:
         
         Args:
             player_id (int): Player id that is used to remove player from list
+        
+        Raises:
+            ValueError: If player_id is not in _team_players list
         """
 
         self._validate_parameter(player_id, "Player ID")
@@ -68,7 +78,7 @@ class Team:
                     self._write_player_to_file()
                     return
         
-        raise Exception("Player ID does not exist")
+        raise ValueError("Player ID does not exist")
 
 
     def get_player(self, player_id):
@@ -122,20 +132,23 @@ class Team:
 
         player_of_type = []
 
-        player_of_type = [player for player in self._team_players if player.get_type() == player_type]
+        player_of_type = [player for player in self._team_players if player.get_type().lower() == player_type.lower()]
         
         return player_of_type
 
 
     def update(self, player_obj):
         """Updates list to replace a Player object with new Player object through their id
-        
+           Then, calls _write_player_to_file() to update the file that contains the
+           representations of player objects
+
         Args:
             player_obj (PlayerForward or PlayerGoalie): Player object to replace
         
         Raises:
             ValueError: If player_id is not in list of players
         """
+
         player_id = player_obj.get_id()
 
         if self._player_exists(player_id) is False:
@@ -146,6 +159,7 @@ class Team:
                 break
 
         self._team_players[index] = player_obj
+        self._write_player_to_file()
 
 
     def _player_exists(self, player_id):
@@ -155,9 +169,10 @@ class Team:
             player_id (int): Player's id to be checked
         
         Returns:
-            (boolean): True if id does exist in list, False otherwise
+            (Boolean): True if id does exist in list, False otherwise
         """
-        # self._validate_parameter(player_id, "Player ID")
+
+        self._validate_parameter(player_id, "Player ID")
 
         for player in self._team_players:
             if player.get_id() == player_id:
@@ -167,8 +182,7 @@ class Team:
 
 
     def _read_player_from_file(self):
-        # TODO: When you EntityManager is constructed (i.e., __init__), this method will load the JSON Entity records from the file at _filepath into your list of entities (i.e., _entities instance variable).
-        #       Make sure it creates the correct type of Entity (SpecificEntity1 or SpecificEntity2).
+        """ Private method to load the JSON player records from the file at _filepath into the list of players """
 
         if not os.path.getsize(self._filepath):
             return
@@ -196,12 +210,7 @@ class Team:
 
 
     def _write_player_to_file(self):
-        # TODO: In any method that modifies an Entity object in your list of entities (i.e., _entities instance variable), this method is called.
-        #       The first thing this method will do is open the file at _filepath for writing (such that the existing data will be overwritten).
-        #       For each Entity record in _entities:
-        #           o It will call the to_dict() method to get the Python dictionary will all the attributes for the SpecificEntity
-        #           o It will serialize the Python dictionary to a JSON representation
-        #           o The JSON representation is written as a string to a single line in the file
+        """ Private method to write a JSON string of players to a single line in the player file """
         
         with open(self._filepath, "w") as player_file:
             player_dict = {
@@ -219,12 +228,6 @@ class Team:
 
             player_file.write(json.dumps(player_dict, indent=4))
 
-
-    def __repr__(self):
-        length = "Length of list: %s" % (len(self._team_players))
-        # ptype = (self._team_players[2])._player_type
-        
-        return "%s\n%s" % (length, self._team_players)
 
     @staticmethod
     def _validate_object(obj):

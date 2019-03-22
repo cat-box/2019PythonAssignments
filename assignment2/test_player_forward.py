@@ -11,7 +11,8 @@ class TestPlayerForward(TestCase):
     def setUp(self):
         self.logPoint()
         self.test_player_forward = PlayerForward("Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
-        
+        self.none_value = None
+        self.empty_value = ""
 
     def test_player_forward_valid(self):
         """ 010A: Valid values for constructor """
@@ -19,8 +20,38 @@ class TestPlayerForward(TestCase):
 
 
     def test_player_forward_invalid_undefined(self):
-        """ 010B: Invalid values (undefined) for constructor """
-        self.assertRaisesRegex(ValueError, "fname cannot be undefined", PlayerForward, None, "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        """ 010B: Invalid values for constructor """
+        self.assertRaisesRegex(ValueError, "fname cannot be undefined", PlayerForward, self.none_value, "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "lname cannot be undefined", PlayerForward, "Sven", self.none_value, 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "height cannot be undefined", PlayerForward, "Sven", "Baertschi", self.none_value, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "weight cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, self.none_value, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "jersey_num cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, self.none_value, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "date_birth cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, self.none_value, "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "year_joined cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", self.none_value, "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "zone cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", self.none_value, "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "shooting_hand cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", self.none_value, 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "goals cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", self.none_value, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "assists cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, self.none_value, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "total_shots cannot be undefined", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, self.none_value, "Forward")
+        self.assertRaisesRegex(ValueError, "Player type must be Forward", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, self.none_value)
+
+
+    def test_player_forward_invalid_empty(self):
+        """ 010C: Empty values for constructor """
+        self.assertRaisesRegex(ValueError, "fname cannot be empty", PlayerForward, "", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "lname cannot be empty", PlayerForward, "Sven", "", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "height cannot be empty", PlayerForward, "Sven", "Baertschi", "", 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "weight cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, "", 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "jersey_num cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, "", "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "date_birth cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "", "2011", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "year_joined cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "", "LW", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "zone cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "", "L", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "shooting_hand cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "", 8, 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "goals cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", "", 5, 40, "Forward")
+        self.assertRaisesRegex(ValueError, "assists cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, "", 40, "Forward")
+        self.assertRaisesRegex(ValueError, "total_shots cannot be empty", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, "", "Forward")
+        self.assertRaisesRegex(ValueError, "Player type must be Forward", PlayerForward, "Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "")
+
 
     def test_get_zone(self):
         """ 020A: Valid return for get_zone() """
