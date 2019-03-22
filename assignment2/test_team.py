@@ -16,13 +16,13 @@ class TestTeam(TestCase):
         "Goalie": []
     }
 
-    @patch('builtins.open', mock_open(read_data='1'))
+    @patch('builtins.open', mock_open(read_data=""))
     def setUp(self):
         """ Creates test fixture """
         self.logPoint()
 
         json.load = MagicMock(return_value=TestTeam.TEST_PLAYERS)
-        self.team = Team("test_players.json")
+        self.team = Team("testplayers.json")
         
         self.forward = PlayerForward("Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "forward")
         self.forward_id = id(self.forward)
@@ -35,13 +35,12 @@ class TestTeam(TestCase):
         self.undefined_value = None
         self.empty_value = ""
 
-
     def test_team(self):
         """ 010A: Valid Construction """
 
         self.assertIsNotNone(self.team, "Team must be defined")
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_add(self):
         """ 020A: Valid Add Player """
 
@@ -51,14 +50,14 @@ class TestTeam(TestCase):
         self.assertEqual(returned_id, self.forward_id, "Player must have id %s" % self.forward_id)
         self.assertEqual(len(self.team.get_all_players()), 1, "Team must have 1 player")
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_add_undefined(self):
         """ 020B: Invalid Add Player """
 
         undefined_player = None
         self.assertRaisesRegex(ValueError, "Player must be defined", self.team.add, undefined_player)
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_add_player_already_exists(self):
         """ 020C: Invalid Add Player - Player Already Exists """
 
@@ -70,7 +69,7 @@ class TestTeam(TestCase):
         self.team.add(self.forward)
         self.assertEqual(len(self.team.get_all_players()), 1, "Team must still only have 1 player")
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_delete(self):
         """ 030A: Valid Delete Player """
 
@@ -84,14 +83,14 @@ class TestTeam(TestCase):
         self.team.delete(self.forward_id)
         self.assertEqual(len(self.team.get_all_players()), 0, "Team must have no players")
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_delete_invalid_player_id(self):
         """ 030B: Invalid Delete Player Parameters """
 
         self.assertRaisesRegex(ValueError, "Player ID cannot be undefined", self.team.delete, self.undefined_value)
         self.assertRaisesRegex(ValueError, "Player ID cannot be empty", self.team.delete, self.empty_value)
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_delete_non_existent_player(self):
         """ 030C: Invalid Delete Player - Player is Non-Existent """
 
@@ -105,7 +104,7 @@ class TestTeam(TestCase):
         self.assertRaisesRegex(ValueError, "Player ID does not exist", self.team.delete, self.goalie_id)
         self.assertEqual(len(self.team.get_all_players()), 1, "Team must have 1 player")
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_get_player(self):
         """ 040A: Valid Get Player """
 
@@ -116,14 +115,14 @@ class TestTeam(TestCase):
         self.assertEqual(retrieved_player.get_zone(), "LW", "Player must have zone LW")
         self.assertEqual(retrieved_player.get_stats(), [8, 5, 40], "Player must have stats [8, 5, 40]")
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_get_player_invalid_player_id(self):
         """ 040B: Invalid Get Player Parameters """
 
         self.assertRaisesRegex(ValueError, "Player ID cannot be undefined", self.team.get_player, self.undefined_value)
         self.assertRaisesRegex(ValueError, "Player ID cannot be empty", self.team.get_player, self.empty_value)
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_get_player_non_existent(self):
         """ 040C: Invalid Get Player - Player is Non-Existent"""
 
@@ -132,7 +131,7 @@ class TestTeam(TestCase):
 
         self.assertIsNone(self.team.get_player(99), "No player should exist for 99")
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_get_all_players(self):
         """ 050A: Valid get_all_players() """
 
@@ -145,7 +144,7 @@ class TestTeam(TestCase):
         self.assertEqual(list_players[0].get_fname(), "Sven", "Player must have first name 'Sven'")
         self.assertEqual(list_players[1].get_id(), self.goalie_id, "Player must have id %s" % self.goalie_id)
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_get_all_players_invalid(self):
         """ 050B: Invalid get_all_players() """
  
@@ -159,7 +158,7 @@ class TestTeam(TestCase):
 
         self.assertIsNotNone(list_players[0], "Player must be defined")
 
-
+    @patch('builtins.open', mock_open(read_data=""))
     def test_get_all_by_type(self):
         """ 060A: Valid Get all by Type """
 
@@ -183,7 +182,7 @@ class TestTeam(TestCase):
         self.assertRaisesRegex(ValueError, "Player Type cannot be empty", self.team.get_all_by_type, self.empty_value)
         self.assertRaisesRegex(ValueError, "Player Type must be Forward or Goalie", self.team.get_all_by_type, "Defense")  
 
-    
+    @patch('builtins.open', mock_open(read_data=""))
     def test_update(self):
         """ 070A: Valid Update """
 
@@ -197,7 +196,7 @@ class TestTeam(TestCase):
 
         self.assertEqual(self.team.get_player(self.forward_id).get_full_name(), "Yann Sauve")
 
-
+    
     def tearDown(self):
         self.logPoint()
 

@@ -1,5 +1,4 @@
 import json
-import os
 from player_forward import PlayerForward
 from player_goalie import PlayerGoalie
 
@@ -184,11 +183,13 @@ class Team:
     def _read_player_from_file(self):
         """ Private method to load the JSON player records from the file at _filepath into the list of players """
 
-        if not os.path.getsize(self._filepath):
-            return
-
         with open(self._filepath) as player_file:
-            players_obj = json.load(player_file)
+            data = player_file.read()
+
+            if (data== None) or (data == ""):
+                return
+
+            players_obj = json.loads(data)
 
             for key, value in players_obj.items():
                 if key.lower() == "forward":

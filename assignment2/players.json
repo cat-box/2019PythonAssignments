@@ -1,24 +1,7 @@
 {
-    "Forward": [
-        {
+    "Forward": [{
             "id": 123456789,
             "fname": "Bo",
-            "lname": "Horvat",
-            "height": 182.88,
-            "weight": 215,
-            "jersey_num": 53,
-            "date_birth": "Apr 5, 1996",
-            "year_joined": 2013,
-            "zone": "C",
-            "shooting_hand": "L",
-            "goals": 27,
-            "assists": 30,
-            "total_shots": 57,
-            "player_type": "Forward"
-        },
-        {
-            "id": 1886474659992,
-            "fname": "Test",
             "lname": "Horvat",
             "height": 182.88,
             "weight": 215,
@@ -49,23 +32,21 @@
             "player_type": "Forward"
         }
     ],
-    "Goalie": [
-        {
-            "id": 987654321,
-            "fname": "Roberto",
-            "lname": "Luongo",
-            "height": 192.02,
-            "weight": 215,
-            "jersey_num": 1,
-            "date_birth": "Apr 4, 1979",
-            "year_joined": 2006,
-            "shots_against": 1157,
-            "goals_against": 96,
-            "goals_saved": 1061,
-            "games_played": 42,
-            "games_won": 19,
-            "games_lost": 16,
-            "player_type": "Goalie"
-        }
-    ]
+    "Goalie": [{
+        "id": 987654321,
+        "fname": "Roberto",
+        "lname": "Luongo",
+        "height": 192.02,
+        "weight": 215,
+        "jersey_num": 1,
+        "date_birth": "Apr 4, 1979",
+        "year_joined": 2006,
+        "shots_against": 1157,
+        "goals_against": 96,
+        "goals_saved": 1061,
+        "games_played": 42,
+        "games_won": 19,
+        "games_lost": 16,
+        "player_type": "Goalie"
+    }]
 }
