@@ -1,0 +1,15 @@
+{
+    "fname": "Bo",
+    "lname": "Horvat",
+    "height": 182.88,
+    "weight": 215,
+    "jersey_num": 53,
+    "date_birth": "Apr 5, 1996",
+    "year_joined": 2013,
+    "zone": "C",
+    "shooting_hand": "L",
+    "goals": 27,
+    "assists": 30,
+    "total_shots": 57,
+    "player_type": "forward"
+}

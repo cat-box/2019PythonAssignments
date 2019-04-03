@@ -1,3 +1,4 @@
+from sqlalchemy import Column, Integer, String
 from abstract_player import AbstractPlayer
 import json
 
@@ -5,8 +6,15 @@ import json
 class PlayerForward(AbstractPlayer):
     """PlayerForward class
     """
+
     PLAYER_TYPE = "Forward"
 
+    zone = Column(String)
+    shooting_hand = Column(String(1))
+    goals = Column(Integer)
+    assists = Column(Integer)
+    total_shots = Column(Integer)
+    
 
     def __init__(self, fname, lname, height, weight, jersey_num, date_birth, year_joined, zone, shooting_hand, goals, assists, total_shots, player_type):
         """Constructor method for PlayerForward

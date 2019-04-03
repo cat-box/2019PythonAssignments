@@ -1,0 +1,16 @@
+{
+    "fname": "Jacob",
+    "lname": "Markstrom",
+    "height": 201.17,
+    "weight": 206,
+    "jersey_num": 25,
+    "date_birth": "Jan 31, 1990",
+    "year_joined": 2018,
+    "shots_against": 1768,
+    "goals_against": 153,
+    "goals_saved": 1614,
+    "games_played": 56,
+    "games_won": 27,
+    "games_lost": 20,
+    "player_type": "Goalie"
+}

@@ -7,12 +7,12 @@ class AbstractPlayer(Base):
     __tablename__ = 'player'
 
     id = Column(Integer, primary_key=True)
-    fname = Column(String(250), nullable=False)
-    lname = Column(String(250), nullable=False)
+    fname = Column(String(25), nullable=False)
+    lname = Column(String(25), nullable=False)
     height = Column(Integer, nullable=False)
     weight = Column(Integer, nullable=False)
     jersey_num = Column(Integer, nullable=False)
-    date_birth = Column(String(250), nullable=False)
+    date_birth = Column(String(25), nullable=False)
     year_joined = Column(Integer, nullable=False)
 
 

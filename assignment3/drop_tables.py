@@ -4,7 +4,7 @@ conn = sqlite3.connect('players.sqlite')
 
 c = conn.cursor()
 c.execute('''
-          DROP TABLE course
+          DROP TABLE player
           ''')
 
 conn.commit()

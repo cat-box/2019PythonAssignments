@@ -80,11 +80,9 @@ class Team:
         self._validate_parameter(player_id, "Player ID")
 
         if self._player_exists(player_id) is True:
-            for player in self._team_players:
-                if player.get_id() == player_id:
-                    self._team_players.remove(player)
-                    self._write_player_to_file()
-                    return
+            session = self._db_session()
+
+            existing_player = session.query(AbstractPlayer).filter(AbstractPlayer.id == player_id).first()
         
         raise ValueError("Player ID does not exist")
 
