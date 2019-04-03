@@ -1,0 +1,52 @@
+{
+    "Forward": [{
+            "id": 123456789,
+            "fname": "Bo",
+            "lname": "Horvat",
+            "height": 182.88,
+            "weight": 215,
+            "jersey_num": 53,
+            "date_birth": "Apr 5, 1996",
+            "year_joined": 2013,
+            "zone": "C",
+            "shooting_hand": "L",
+            "goals": 27,
+            "assists": 30,
+            "total_shots": 57,
+            "player_type": "Forward"
+        },
+        {
+            "id": 2110053279896,
+            "fname": "Sven",
+            "lname": "Baertschi",
+            "height": 180.34,
+            "weight": 190,
+            "jersey_num": 47,
+            "date_birth": "Oct 5, 1992",
+            "year_joined": "2011",
+            "zone": "LW",
+            "shooting_hand": "L",
+            "goals": 8,
+            "assists": 5,
+            "total_shots": 40,
+            "player_type": "Forward"
+        }
+    ],
+    "Goalie": [{
+        "id": 987654321,
+        "fname": "Roberto",
+        "lname": "Luongo",
+        "height": 192.02,
+        "weight": 215,
+        "jersey_num": 1,
+        "date_birth": "Apr 4, 1979",
+        "year_joined": 2006,
+        "shots_against": 1157,
+        "goals_against": 96,
+        "goals_saved": 1061,
+        "games_played": 42,
+        "games_won": 19,
+        "games_lost": 16,
+        "player_type": "Goalie"
+    }]
+}
