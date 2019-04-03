@@ -6,15 +6,15 @@ import json
 class PlayerForward(AbstractPlayer):
     """PlayerForward class
     """
-
+    
     PLAYER_TYPE = "Forward"
 
-    zone = Column(String)
+    zone = Column(String(25))
     shooting_hand = Column(String(1))
     goals = Column(Integer)
     assists = Column(Integer)
     total_shots = Column(Integer)
-    
+
 
     def __init__(self, fname, lname, height, weight, jersey_num, date_birth, year_joined, zone, shooting_hand, goals, assists, total_shots, player_type):
         """Constructor method for PlayerForward
@@ -27,78 +27,24 @@ class PlayerForward(AbstractPlayer):
             total_shots (int): Total number of shots taken 
         """
         self._validate_input(zone, "zone")
-        self._zone = zone
+        self.zone = zone
 
         self._validate_input(shooting_hand, "shooting_hand")
-        self._shooting_hand = shooting_hand
+        self.shooting_hand = shooting_hand
 
         self._validate_input(goals, "goals")
-        self._goals = goals
+        self.goals = goals
 
         self._validate_input(assists, "assists")
-        self._assists = assists
+        self.assists = assists
     
         self._validate_input(total_shots, "total_shots")
-        self._total_shots = total_shots
+        self.total_shots = total_shots
 
         self._validate_player(player_type)
-        self._player_type = self.PLAYER_TYPE
+        self.player_type = self.PLAYER_TYPE
 
         super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type)
-
-
-    def get_zone(self):
-        """Gets zone of player
-        
-        Returns:
-            zone (string): Player's zone
-        """
-        return self._zone
-
-
-    def get_shooting_hand(self):
-        """Gets shooting hand of player
-        
-        Returns:
-            shooting hand (string): Player's shooting hand
-        """
-        return self._shooting_hand
-
-    
-    def get_goals(self):
-        """Gets number of goals from player
-        
-        Returns:
-            goals (int): Player's number of goals
-        """
-        return self._goals
-    
-
-    def get_assists(self):
-        """Gets number of assists from player
-        
-        Returns:
-            assists (int): Player's number of assists
-        """
-        return self._assists
-
-
-    def get_total_shots(self):
-        """Gets number of total shots from player
-        
-        Returns:
-            total_shots (int): Player's total number of shots
-        """
-        return self._total_shots
-
-
-    def get_stats(self):
-        """Gets a list of player's stats
-        
-        Returns:
-            (list): List containing player's number of goals, assists, and total shots
-        """
-        return [self._goals, self._assists, self._total_shots]
 
 
     def get_type(self):
@@ -118,42 +64,41 @@ class PlayerForward(AbstractPlayer):
         """
         player_details = {}
 
-        player_details['id'] = self._id
-        player_details["fname"] = self._fname
-        player_details["lname"] = self._lname    
-        player_details["height"] = self._height  
-        player_details["weight"] = self._weight
-        player_details["jersey_num"] = self._jersey_num    
-        player_details["date_birth"] = self._date_birth
-        player_details["year_joined"] = self._year_joined
-        player_details["zone"] = self._zone
-        player_details["shooting_hand"] = self._shooting_hand
-        player_details["goals"] = self._goals
-        player_details["assists"] = self._assists
-        player_details["total_shots"] = self._total_shots
-        player_details["player_type"] = self._player_type
+        player_details['id'] = self.id
+        player_details["fname"] = self.fname
+        player_details["lname"] = self.lname    
+        player_details["height"] = self.height  
+        player_details["weight"] = self.weight
+        player_details["jersey_num"] = self.jersey_num    
+        player_details["date_birth"] = self.date_birth
+        player_details["year_joined"] = self.year_joined
+        player_details["zone"] = self.zone
+        player_details["shooting_hand"] = self.shooting_hand
+        player_details["goals"] = self.goals
+        player_details["assists"] = self.assists
+        player_details["total_shots"] = self.total_shots
+        player_details["player_type"] = self.player_type
 
         return player_details
-
 
     def copy(self, object):
         """ Copies data from a PlayerForward object to this PlayerForward object """
         if isinstance(object, PlayerForward):
-            self._fname = object.get_fname()
-            self._lname = object.get_lname()
-            self._height = object.get_height()
-            self._weight = object.get_weight()
-            self._jersey_num = object.get_jersey_num()
-            self._date_birth = object.get_date_birth()
-            self._year_joined = object.get_year_joined()
-            self._zone = object.get_zone()
-            self._shooting_hand = object.get_shooting_hand()
-            self._goals = object.get_goals()
-            self._assists = object.get_assists()
-            self._total_shots = object.get_total_shots()
-            self._player_type = object.get_player_type()
+            self.fname = object.fname
+            self.lname = object.lname
+            self.height = object.height
+            self.weight = object.weight
+            self.jersey_num = object.jersey_num
+            self.date_birth = object.date_birth
+            self.year_joined = object.year_joined
+            self.zone = object.zone
+            self.shooting_hand = object.shooting_hand
+            self.goals = object.goals
+            self.assists = object.assists
+            self.total_shots = object.total_shots
+            self.player_type = object.player_type
 
-    
+
     @staticmethod
     def _validate_player(value):
         """Private method to validate player_type

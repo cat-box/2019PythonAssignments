@@ -4,14 +4,16 @@ from team import Team
 from player_forward import PlayerForward
 from player_goalie import PlayerGoalie
 
-PLAYER_DB = 'players.sqlite'
+
+app = Flask(__name__)
+
+PLAYERS_DB = "players.sqlite"
+
+team = Team(PLAYERS_DB)
 
 PLAYER_TYPE_FORWARD = "forward"
 PLAYER_TYPE_GOALIE = "goalie"
 
-app = Flask(__name__)
-
-team = Team(PLAYER_DB)
 
 @app.route('/team/players', methods=['POST'])
 def add_player():
@@ -24,9 +26,7 @@ def add_player():
         if player_type == PLAYER_TYPE_FORWARD:
             player = PlayerForward(content["fname"], content["lname"], content["height"], content["weight"], content["jersey_num"], content["date_birth"], content["year_joined"], content["zone"], content["shooting_hand"], content["goals"], content["assists"], content["total_shots"], content["player_type"])
 
-            team.add(player)
-
-            id = str(player.get_id())
+            id = str(team.add(player))
 
             response = app.response_class(
                 status=200,
@@ -35,9 +35,7 @@ def add_player():
         elif player_type == PLAYER_TYPE_GOALIE:
             player = PlayerGoalie(content["fname"], content["lname"], content["height"], content["weight"], content["jersey_num"], content["date_birth"], content["year_joined"], content["shots_against"], content["goals_against"], content["goals_saved"], content["games_played"], content["games_won"], content["games_lost"], content["player_type"])
 
-            team.add(player)
-
-            id = str(player.get_id())
+            id = str(team.add(player))
 
             response = app.response_class(
                 status=200,
@@ -64,14 +62,14 @@ def update_player(player_id):
 
         if player_type == PLAYER_TYPE_FORWARD:
             player = PlayerForward(content["fname"], content["lname"], content["height"], content["weight"], content["jersey_num"], content["date_birth"], content["year_joined"], content["zone"], content["shooting_hand"], content["goals"], content["assists"], content["total_shots"], content["player_type"])
-            player.set_id(player_id)
+            player.id = player_id
             team.update(player)
             response = app.response_class(
                 status=200
             )
         elif player_type == PLAYER_TYPE_GOALIE:
             player = PlayerGoalie(content["fname"], content["lname"], content["height"], content["weight"], content["jersey_num"], content["date_birth"], content["year_joined"], content["shots_against"], content["goals_against"], content["goals_saved"], content["games_played"], content["games_won"], content["games_lost"], content["player_type"])
-            player.set_id(player_id)
+            player.id = player_id
             team.update(player)
             response = app.response_class(
                 status=200

@@ -15,7 +15,7 @@ c.execute('''
            year_joined      INTEGER      NOT NULL,
            player_type      VARCHAR(25)  NOT NULL,
            zone             VARCHAR(25),
-           shooting_hand    CHAR(1),
+           shooting_hand    VARCHAR(1),
            goals            INTEGER,
            assists          INTEGER,
            total_shots      INTEGER,

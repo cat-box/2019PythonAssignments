@@ -1,10 +1,19 @@
+from sqlalchemy import Column, Integer, String
 from abstract_player import AbstractPlayer
 import json
 
 class PlayerGoalie(AbstractPlayer):
     """PlayerGoalie class
     """
+
     PLAYER_TYPE = "Goalie"
+
+    shots_against = Column(Integer)
+    goals_against = Column(Integer)
+    goals_saved = Column(Integer)
+    games_played = Column(Integer)
+    games_won = Column(Integer)
+    games_lost = Column(Integer)
 
 
     def __init__(self, fname, lname, height, weight, jersey_num, date_birth, year_joined, shots_against, goals_against, goals_saved, games_played, games_won, games_lost, player_type):
@@ -19,90 +28,27 @@ class PlayerGoalie(AbstractPlayer):
             games_lost (int): Number of games lost
         """
         self._validate_input(shots_against, "shots_against")
-        self._shots_against = shots_against
+        self.shots_against = shots_against
 
         self._validate_input(goals_against, "goals_against")
-        self._goals_against = goals_against
+        self.goals_against = goals_against
 
         self._validate_input(goals_saved, "goals_saved")
-        self._goals_saved = goals_saved
+        self.goals_saved = goals_saved
     
         self._validate_input(games_played, "games_played")
-        self._games_played = games_played
+        self.games_played = games_played
 
         self._validate_input(games_won, "games_won")
-        self._games_won = games_won
+        self.games_won = games_won
 
         self._validate_input(games_lost, "games_lost")
-        self._games_lost = games_lost
+        self.games_lost = games_lost
 
         self._validate_player(player_type)
-        self._player_type = self.PLAYER_TYPE
+        self.player_type = self.PLAYER_TYPE
 
         super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type)
-
-
-    def get_shots_against(self):
-        """Gets number of shots taken against player
-        
-        Returns:
-            shots_against (int): Player's number of shots against
-        """
-        return self._shots_against
-
-
-    def get_goals_against(self):
-        """Gets number of goals scored against player
-        
-        Returns:
-            goals_against (int): Player's number of goals against
-        """
-        return self._goals_against
-
-
-    def get_goals_saved(self):
-        """Gets number of goals saved by player
-        
-        Returns:
-            goals_saved (int): Player's number of goals saved
-        """
-        return self._goals_saved
-
-
-    def get_games_played(self):
-        """Gets number of games played by player
-        
-        Returns:
-            games_played (int): Player's number of games played
-        """
-        return self._games_played
-
-
-    def get_games_won(self):
-        """Gets number of games won by player
-        
-        Returns:
-            games_won (int): Player's number of games won
-        """
-        return self._games_won
-
-
-    def get_games_lost(self):
-        """Gets number of games lost
-        
-        Returns:
-            games_lost (int): Player's number of games lost
-        """
-        return self._games_lost
-
-
-    def get_win_loss_stats(self):
-        """Gets win/loss stats of player
-        
-        Returns:
-            (list): List containing player's number of games won, lost, and total played
-        """
-        return [self._games_won, self._games_lost, self._games_played]
 
     
     def set_win_loss_stats(self, wins, losses, games_played):
@@ -122,15 +68,6 @@ class PlayerGoalie(AbstractPlayer):
         self._validate_input(games_played, "games_played")
         self._games_played = games_played
 
-    
-    def get_stats(self):
-        """Gets goal stats of player
-        
-        Returns:
-            (list): List containing number of shots and goals against player, and goals saved
-        """
-        return [self._shots_against, self._goals_against, self._goals_saved]
-    
 
     def get_type(self):
         """Gets player's type
@@ -150,23 +87,42 @@ class PlayerGoalie(AbstractPlayer):
 
         player_details = {}
 
-        player_details['id'] = self._id
-        player_details['fname'] = self._fname
-        player_details['lname'] = self._lname
-        player_details['height'] = self._height
-        player_details['weight'] = self._weight
-        player_details['jersey_num']  = self._jersey_num
-        player_details['date_birth'] = self._date_birth
-        player_details['year_joined'] = self._year_joined
-        player_details['shots_against'] = self._shots_against
-        player_details['goals_against'] = self._goals_against
-        player_details['goals_saved'] = self._goals_saved
-        player_details['games_played'] = self._games_played
-        player_details['games_won'] = self._games_won
-        player_details['games_lost'] = self._games_lost
-        player_details["player_type"] = self._player_type
+        player_details['id'] = self.id
+        player_details['fname'] = self.fname
+        player_details['lname'] = self.lname
+        player_details['height'] = self.height
+        player_details['weight'] = self.weight
+        player_details['jersey_num']  = self.jersey_num
+        player_details['date_birth'] = self.date_birth
+        player_details['year_joined'] = self.year_joined
+        player_details['shots_against'] = self.shots_against
+        player_details['goals_against'] = self.goals_against
+        player_details['goals_saved'] = self.goals_saved
+        player_details['games_played'] = self.games_played
+        player_details['games_won'] = self.games_won
+        player_details['games_lost'] = self.games_lost
+        player_details["player_type"] = self.player_type
 
         return player_details
+
+
+    def copy(self, object):
+        """ Copies data from a PlayerForward object to this PlayerForward object """
+        if isinstance(object, PlayerGoalie):
+            self.fname = object.fname
+            self.lname = object.lname
+            self.height = object.height
+            self.weight = object.weight
+            self.jersey_num = object.jersey_num
+            self.date_birth = object.date_birth
+            self.year_joined = object.year_joined
+            self.shots_against = object.shots_against
+            self.goals_against = object.goals_against
+            self.goals_saved = object.goals_saved
+            self.games_played = object.games_played
+            self.games_won = object.games_won
+            self.games_lost = object.games_lost
+            self.player_type = object.player_type
 
 
     @staticmethod

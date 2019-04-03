@@ -1,5 +1,3 @@
-#!/usr/bin/env python3
-
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from base import Base
@@ -10,13 +8,17 @@ from player_forward import PlayerForward
 from player_goalie import PlayerGoalie
 
 class Team:
-    """Team Class """
+    """ Team Class """
+
+    PLAYER_TYPE_FORWARD = "forward"
+    PLAYER_TYPE_GOALIE = "goalie"
 
     def __init__(self, db_filename):
-        """Constructor method for Team """
+        """ Constructor method for Team """
 
         if db_filename is None or db_filename == "":
             raise ValueError("Invalid Database File")
+
 
         engine = create_engine('sqlite:///' + db_filename)
 
@@ -26,8 +28,9 @@ class Team:
 
 
     def add(self, player_obj):
-        """Adds player to database of team players if id doesn't exist in database
+        """Adds player to list of team players if id doesn't exist in list
            Generates an id for the player on successful add, then returns that id
+           Then, writes a dictionary representation of the player to file
 
         Args:
             player_obj (PlayerForward or PlayerGoalie): Either a forward or goalie class
@@ -38,14 +41,16 @@ class Team:
 
         self._validate_object(player_obj)
 
-        session = self._db_session()
-
         player_id = self.create_id(player_obj)
+
+        session = self._db_session()
 
         if self._player_exists(player_id) is False:
             session.add(player_obj)
+            session.commit()
             session.close()
-            return player_obj.get_id()
+
+            return player_id
 
         session.close()
         return
@@ -61,7 +66,7 @@ class Team:
         self._validate_object(player_obj)
 
         player_id = id(player_obj)
-        player_obj.set_id(player_id)
+        player_obj.id = player_id
 
         return player_id
 
@@ -79,11 +84,21 @@ class Team:
 
         self._validate_parameter(player_id, "Player ID")
 
-        if self._player_exists(player_id) is True:
-            session = self._db_session()
+        session = self._db_session()
 
+        if self._player_exists(player_id) is True:
             existing_player = session.query(AbstractPlayer).filter(AbstractPlayer.id == player_id).first()
-        
+
+            if existing_player is None:
+                session.close()
+                raise ValueError("Player does not exist")
+
+            session.delete(existing_player)
+            session.commit()
+            session.close()
+            return
+
+        session.close()
         raise ValueError("Player ID does not exist")
 
 
@@ -98,12 +113,30 @@ class Team:
         """
 
         self._validate_parameter(player_id, "Player ID")
+        
+        session = self._db_session()
+        
+        existing_player = None
 
-        for player in self._team_players:
-            if player.get_id() == int(player_id):
-                return player
+        if self._player_exists(player_id) is True:
+            queried_player = session.query(AbstractPlayer).filter(AbstractPlayer.id == player_id).first()
+            
+            if queried_player is None:
+                session.close()
+                return None
 
-        return None
+            queried_type = queried_player.player_type
+
+            if queried_type.lower() == self.PLAYER_TYPE_FORWARD:
+                existing_player = session.query(PlayerForward).filter(PlayerForward.id == player_id).first()
+            elif queried_player.lower() == self.PLAYER_TYPE_GOALIE:
+                existing_player = session.query(PlayerGoalie).filter(PlayerGoalie.id == player_id).first()
+            else:
+                session.close()
+                return None
+        
+        session.close()
+        return existing_player
 
 
     def get_all_players(self):
@@ -114,10 +147,22 @@ class Team:
             _team_players (list): List of Player objects
         """
 
-        if len(self._team_players) is 0:
-            return []
-        else:
-            return self._team_players
+        session = self._db_session()
+
+        players = []
+
+        forwards = session.query(PlayerForward).filter(PlayerForward.player_type == self.PLAYER_TYPE_FORWARD).all()
+        goalies = session.query(PlayerGoalie).filter(PlayerGoalie.player_type == self.PLAYER_TYPE_GOALIE).all()
+
+        for forward in forwards:
+            players.append(forward)
+
+        for goalie in goalies:
+            players.append(goalie)
+
+        session.close()
+
+        return players
 
 
     def get_all_by_type(self, player_type):
@@ -133,14 +178,18 @@ class Team:
         self._validate_parameter(player_type, "Player Type")
         self._validate_type(player_type)
 
-        if len(self._team_players) is 0:
-            return []
-
-        player_of_type = []
-
-        player_of_type = [player for player in self._team_players if player.get_type().lower() == player_type.lower()]
+        session = self._db_session()
         
-        return player_of_type
+        if player_type.lower() == self.PLAYER_TYPE_FORWARD:
+            existing_players = session.query(PlayerForward).filter(PlayerForward.player_type == player_type).all()
+        elif player_type.lower() == self.PLAYER_TYPE_GOALIE:
+            existing_players = session.query(PlayerGoalie).filter(PlayerGoalie.player_type == player_type).all()
+        else:
+            session.close()
+            return []
+        
+        session.close()
+        return existing_players
 
 
     def update(self, player_obj):
@@ -155,17 +204,29 @@ class Team:
             ValueError: If player_id is not in list of players
         """
 
-        player_id = player_obj.get_id()
+        self._validate_object(player_obj)
+        
+        player_id = player_obj.id
 
         if self._player_exists(player_id) is False:
-            raise ValueError("Player ID does not already exist")
-
-        for index, player in enumerate(self._team_players, 0):
-            if player.get_id() == player_id:
-                break
-
-        self._team_players[index] = player_obj
-        self._write_player_to_file()
+            raise ValueError("Player ID does not exist")
+            
+        player_type = player_obj.player_type
+        
+        session = self._db_session()
+        
+        if player_type == self.PLAYER_TYPE_FORWARD:
+            existing_player = session.query(PlayerForward).filter(PlayerForward.id == player_id).first()
+        elif player_type == self.PLAYER_TYPE_GOALIE:
+            existing_player = session.query(PlayerGoalie).filter(PlayerGoalie.id == player_id).first()
+        
+        if existing_player is None:
+            session.close()
+            raise ValueError("Player does not exist")
+        
+        existing_player.copy(player_obj)
+        session.commit()
+        session.close()
 
 
     def _player_exists(self, player_id):
@@ -180,12 +241,6 @@ class Team:
 
         self._validate_parameter(player_id, "Player ID")
 
-        # for player in self._team_players:
-        #     if player.get_id() == player_id:
-        #         return True
-
-        # return False
-
         session = self._db_session()
         existing_player = session.query(AbstractPlayer).filter(AbstractPlayer.id == player_id).first()
 
@@ -193,6 +248,7 @@ class Team:
             session.close()
             return False
 
+        session.close()
         return True
 
 
@@ -206,7 +262,7 @@ class Team:
         Raises:
             ValueError: If obj is undefined
         """
-        if obj is None:
+        if obj is None or not (isinstance(obj, PlayerForward) or isinstance(obj, PlayerGoalie)):
             raise ValueError("Player must be defined")
 
     
