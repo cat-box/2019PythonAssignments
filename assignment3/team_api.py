@@ -148,7 +148,7 @@ def get_all_players():
 def get_players_of_type(player_type):
     """ Gets all players of a type """
     try:
-        players_of_type = team.get_all_by_type(player_type.lower())
+        players_of_type = team.get_all_by_type(player_type)
 
         player_list = []
 
@@ -169,5 +169,5 @@ def get_players_of_type(player_type):
     return response
 
 
-if __name__ == "__main__":
+if __name__ == "__main__":  
     app.run()

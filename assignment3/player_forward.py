@@ -7,7 +7,7 @@ class PlayerForward(AbstractPlayer):
     """PlayerForward class
     """
     
-    PLAYER_TYPE = "Forward"
+    PLAYER_TYPE = "forward"
 
     zone = Column(String(25))
     shooting_hand = Column(String(1))
@@ -42,7 +42,6 @@ class PlayerForward(AbstractPlayer):
         self.total_shots = total_shots
 
         self._validate_player(player_type)
-        self.player_type = self.PLAYER_TYPE
 
         super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type)
 

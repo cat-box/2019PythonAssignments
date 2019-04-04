@@ -175,6 +175,8 @@ class Team:
             player_of_type (list): List containing Player objects of the given player_type
         """
 
+        player_type = player_type.lower()
+
         self._validate_parameter(player_type, "Player Type")
         self._validate_type(player_type)
 

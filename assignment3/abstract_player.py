@@ -57,7 +57,7 @@ class AbstractPlayer(Base):
         self.year_joined = year_joined
 
         self._validate_player_type(player_type)
-        self.player_type = player_type
+        self.player_type = player_type.lower()
 
 
     def get_stats(self):

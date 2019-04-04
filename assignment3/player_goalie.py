@@ -6,7 +6,7 @@ class PlayerGoalie(AbstractPlayer):
     """PlayerGoalie class
     """
 
-    PLAYER_TYPE = "Goalie"
+    PLAYER_TYPE = "goalie"
 
     shots_against = Column(Integer)
     goals_against = Column(Integer)
@@ -46,7 +46,6 @@ class PlayerGoalie(AbstractPlayer):
         self.games_lost = games_lost
 
         self._validate_player(player_type)
-        self.player_type = self.PLAYER_TYPE
 
         super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type)
 
