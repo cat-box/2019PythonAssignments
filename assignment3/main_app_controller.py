@@ -6,18 +6,24 @@ from page1_view import Page1View
 from page2_view import Page2View
 from bottom_navbar_view import BottomNavbarView
 from popup_view import PopupView
+from add_player_forward_view import AddPlayerForwardView
+from add_player_goalie_view import AddPlayerGoalieView
 import requests
+import json
 
 class MainAppController(tk.Frame):
     """ Main Application for GUI """
+
+    TYPE_FORWARD = "forward"
+    TYPE_GOALIE = "goalie"
 
     def __init__(self, parent):
         """ Initialize Main Application """
         tk.Frame.__init__(self, parent)
 
         self._top_navbar = TopNavbarView(self, self._page_callback, self._page_popup_callback)
-        self._page1 = Page1View(self, self._page1_submit_callback, self._get_players_of_forward)
-        self._page2 = Page2View(self, self._page2_submit_callback, self._get_players_of_goalie)
+        self._page1 = Page1View(self, self._page1_submit_callback, self._get_players_of_forward, self._page_add_callback)
+        self._page2 = Page2View(self, self._page2_submit_callback, self._get_players_of_goalie, self._get_player, self._page_add_callback)
         self._bottom_navbar = BottomNavbarView(self, self._quit_callback)
 
         self._top_navbar.grid(row=0, columnspan=4, pady=10)
@@ -53,6 +59,15 @@ class MainAppController(tk.Frame):
     def _close_popup_callback(self):
         self._popup_win.destroy()
 
+    def _page_add_callback(self, player_type):
+        self._popup_win = tk.Toplevel()
+        if player_type == self.TYPE_FORWARD:
+            self._popup = AddPlayerForwardView(self._popup_win, self._close_popup_callback)
+        elif player_type == self.TYPE_GOALIE:
+            self._popup = AddPlayerGoalieView(self._popup_win, self._close_popup_callback, self._add_player)
+        else:
+            return
+
     def _page1_submit_callback(self):
         print("Submit Page 1")
         print(self._page1.get_form_data())
@@ -64,18 +79,34 @@ class MainAppController(tk.Frame):
     def _quit_callback(self):
         self.quit()
 
+    def _get_player(self, player_id):
+        print(player_id)
+        response = requests.get("http://127.0.0.1:5000/team/players/%s" % player_id) 
+
+        if response.status_code is 200:
+            return(response.json())
+
     def _get_players_of_forward(self):
-        response1 = requests.get("http://127.0.0.1:5000/team/players/all/forward")
+        response = requests.get("http://127.0.0.1:5000/team/players/all/forward")
 
-        if response1.status_code is 200:
-            self._page1.set_form_data(response1.json())
-
+        if response.status_code is 200:
+            self._page1.set_form_data(response.json())
 
     def _get_players_of_goalie(self):
-        response2 = requests.get("http://127.0.0.1:5000/team/players/all/goalie")
+        response = requests.get("http://127.0.0.1:5000/team/players/all/goalie")
 
-        if response2.status_code is 200:
-            self._page2.set_form_data(response2.json())
+        if response.status_code is 200:
+            self._page2.set_form_data(response.json())
+
+    def _add_player(self, player_data):
+        response = requests.post("http://127.0.0.1:5000/team/players", json = player_data)
+
+        if response.status_code is 200:
+            self._page2.refresh()
+            return response.text
+        
+        return None
+
 
 
 if __name__ == "__main__":

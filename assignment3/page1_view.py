@@ -4,13 +4,14 @@ import tkinter as tk
 class Page1View(tk.Frame):
     """ Page 1 """
 
-    def __init__(self, parent, submit_callback, get_players_callback):
+    def __init__(self, parent, submit_callback, get_players_callback, add_player_callback):
         """ Initialize Page 1 """
         tk.Frame.__init__(self, parent, width=800, height=800)
         self._parent = parent
 
         self._submit_callback = submit_callback
         self._get_players_callback = get_players_callback
+        self._add_player_callback = add_player_callback
 
         self._create_widgets()
 
@@ -27,6 +28,10 @@ class Page1View(tk.Frame):
 
         self._refresh_button = tk.Button(self, text="Refresh", command=self.refresh)
         self._refresh_button.grid(row=3)
+
+        self._add_player = tk.Button(self, text="Add", command=lambda:self._add_player_callback("forward"))
+        self._add_player.grid(row=5)
+
 
 
     def get_form_data(self):

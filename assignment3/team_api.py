@@ -21,6 +21,7 @@ def add_player():
     content = request.json
 
     try:
+        print(content['player_type'])
         player_type = content["player_type"].lower()
 
         if player_type == PLAYER_TYPE_FORWARD:
@@ -43,9 +44,9 @@ def add_player():
             )
         else:
             raise Exception
-    except:
+    except ValueError as e:
         response = app.response_class(
-            response="Player is invalid",
+            response=str(e),#"Player is invalid",
             status=400
         )
 

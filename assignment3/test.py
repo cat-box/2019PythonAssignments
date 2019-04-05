@@ -6,5 +6,9 @@ team = Team("players.sqlite")
 
 player = PlayerForward("Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", 2011, "LW", "L", 8, 5, 40, "forward")
 
+playerd = team.get_player(2659342117520)
+
+print(playerd)
+
 # print(team.add(player))
 # team.delete(2493305080408)

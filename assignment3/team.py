@@ -127,9 +127,9 @@ class Team:
 
             queried_type = queried_player.player_type
 
-            if queried_type.lower() == self.PLAYER_TYPE_FORWARD:
+            if queried_type == self.PLAYER_TYPE_FORWARD:
                 existing_player = session.query(PlayerForward).filter(PlayerForward.id == player_id).first()
-            elif queried_player.lower() == self.PLAYER_TYPE_GOALIE:
+            elif queried_type == self.PLAYER_TYPE_GOALIE:
                 existing_player = session.query(PlayerGoalie).filter(PlayerGoalie.id == player_id).first()
             else:
                 session.close()
