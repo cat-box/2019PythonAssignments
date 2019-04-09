@@ -7,13 +7,12 @@ class TopNavbarView(tk.Frame):
     PAGE1 = 1
     PAGE2 = 2
 
-    def __init__(self, parent, page_callback, page_popup_callback):
+    def __init__(self, parent, page_callback):
         """ Initialize the nav bar """
         tk.Frame.__init__(self, parent)
         self._parent = parent
 
         self._page_callback = page_callback
-        self._page_popup_callback = page_popup_callback
         self._page = tk.IntVar()
         self._create_widgets()
 
@@ -38,9 +37,4 @@ class TopNavbarView(tk.Frame):
 
         self.curr_page.set(TopNavbarView.PAGE1)
 
-        tk.Button(self,
-                  text="Popup",
-                  command=self._page_popup_callback).grid(row=0, column=3)
-
         self._page.set(1)
-

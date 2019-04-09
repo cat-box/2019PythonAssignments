@@ -1,12 +1,14 @@
 import tkinter as tk
-from tkinter import W, E
+from tkinter import W, E, messagebox as tkMessageBox
 import re
 import json
 
 class Page2View(tk.Frame):
     """ Page 2 """
 
-    def __init__(self, parent, submit_callback, get_players_callback, get_player_detail_callback, add_player_callback):
+    TYPE_GOALIE = "goalie"
+
+    def __init__(self, parent, submit_callback, get_players_callback, get_player_detail_callback, add_player_callback, delete_player_callback, update_player_callback):
         """ Initialize Page 2 """
         tk.Frame.__init__(self, parent)
         self._parent = parent
@@ -15,6 +17,8 @@ class Page2View(tk.Frame):
         self._get_players_callback = get_players_callback
         self._get_player_detail_callback = get_player_detail_callback
         self._add_player_callback = add_player_callback
+        self._delete_player_callback = delete_player_callback
+        self._update_player_callback = update_player_callback
 
         self._create_widgets()
 
@@ -35,16 +39,19 @@ class Page2View(tk.Frame):
         self._add_player = tk.Button(self, text="Add", command=lambda:self._add_player_callback("goalie"))
         self._add_player.grid(row=5)
 
+        self._delete_player = tk.Button(self, text="Delete", command=self.delete_player)
+        self._delete_player.grid(row=6)
 
-    def get_form_data(self):
-        return { "fname":  "" }
+        self._update_player = tk.Button(self, text="Update", command=self.update_player)
+        self._update_player.grid(row=7)
+
 
     def refresh(self):
         self._listbox.destroy()
         self._listbox = tk.Listbox(self, width=35)
         self._listbox.grid(row=2, sticky=W)
 
-        self._get_players_callback()
+        self._get_players_callback(self.TYPE_GOALIE)
 
     def get_id(self):
         selection = self._listbox.curselection()
@@ -62,7 +69,25 @@ class Page2View(tk.Frame):
     def get_data(self):
         player_id = self.get_id()
         details = self._get_player_detail_callback(player_id)
-        self.popupmsg(details, '%s: %s %s' % (details['id'], details['fname'], details['lname']))
+        self.popupmsg(details)
+
+    def delete_player(self):
+        player_id = self.get_id()
+
+        if tkMessageBox.askyesno('Verify', 'Really delete?'):
+            status_code = self._delete_player_callback(player_id)
+            if status_code == 200:
+                self._message = tkMessageBox.showinfo("Sucess", "Player successfully deleted! :D")
+            else:
+                self._message = tkMessageBox.showinfo("Error", "Player was not deleted! :c")
+            self.refresh()
+
+    def update_player(self):
+        player_id = self.get_id()
+        player_detail = self._get_player_detail_callback(player_id)
+        self._update_player_callback(player_detail)
+        self.refresh()
+
 
     def popupmsg(self, message, player):
         popup = tk.Toplevel(self)
