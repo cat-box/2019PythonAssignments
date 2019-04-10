@@ -28,21 +28,27 @@ class PlayerGoalie(AbstractPlayer):
             games_lost (int): Number of games lost
         """
         self._validate_input(shots_against, "shots_against")
+        self._validate_int(shots_against, "shots_against")
         self.shots_against = shots_against
 
         self._validate_input(goals_against, "goals_against")
+        self._validate_int(goals_against, "goals_against")
         self.goals_against = goals_against
 
         self._validate_input(goals_saved, "goals_saved")
+        self._validate_int(goals_saved, "goals_saved")
         self.goals_saved = goals_saved
     
         self._validate_input(games_played, "games_played")
+        self._validate_int(games_played, "games_played")
         self.games_played = games_played
 
         self._validate_input(games_won, "games_won")
+        self._validate_int(games_won, "games_won")
         self.games_won = games_won
 
         self._validate_input(games_lost, "games_lost")
+        self._validate_int(games_lost, "games_lost")
         self.games_lost = games_lost
 
         self._validate_player(player_type)

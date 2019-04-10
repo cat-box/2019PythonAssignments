@@ -11,8 +11,8 @@ class AbstractPlayer(Base):
     id = Column(Integer, primary_key=True)
     fname = Column(String(25), nullable=False)
     lname = Column(String(25), nullable=False)
-    height = Column(Integer, nullable=False)
-    weight = Column(Integer, nullable=False)
+    height = Column(Float(2), nullable=False)
+    weight = Column(Float(2), nullable=False)
     jersey_num = Column(Integer, nullable=False)
     date_birth = Column(String(25), nullable=False)
     year_joined = Column(Integer, nullable=False)
@@ -44,11 +44,11 @@ class AbstractPlayer(Base):
         self.lname = lname
 
         self._validate_input(height, "height")
-        self._validate_int(height, "height")
+        self._validate_float(height, "height")
         self.height = height
 
         self._validate_input(weight, "weight")
-        self._validate_int(weight, "weight'")
+        self._validate_float(weight, "weight")
         self.weight = weight
 
         self._validate_input(jersey_num, "jersey_num")
@@ -131,16 +131,32 @@ class AbstractPlayer(Base):
     
 
     @staticmethod 
-    def _validate_number(input, input_display):
-        """Private method to check if input is a number-type
+    def _validate_int(value, input_display):
+        """Private method to check if input is a int-type
         
         Args:
             input: Input to be checked
             input_display (string): String used in ValueError message
         
         Raises:
-            ValueError: If input is not of int- or float-type
+            ValueError: If input is not of int-type
         """
 
-        if type(input) != int or type(input) != float:
-            raise ValueError("%s must be an int or float" % (input_display))
+        if type(value) != int:
+            raise ValueError("%s must be an int" % (input_display))
+
+    
+    @staticmethod
+    def _validate_float(value, input_display):
+        """Private method to check if input is a float-type
+        
+        Args:
+            input: Input to be checked
+            input_display (string): String used in ValueError message
+        
+        Raises:
+            ValueError: If input is not a float-type
+        """
+
+        if type(value) != float:
+            raise ValueError("%s must be a float" % (input_display))

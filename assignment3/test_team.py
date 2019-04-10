@@ -27,11 +27,11 @@ class TestTeam(TestCase):
 
         self.team = Team(self.TEST_PLAYERS_DB)
         
-        self.forward = PlayerForward("Sven", "Baertschi", 180.34, 190, 47, "Oct 5, 1992", "2011", "LW", "L", 8, 5, 40, "forward")
+        self.forward = PlayerForward("Sven", "Baertschi", 180.34, 190.0, 47, "Oct 5, 1992", 2011, "LW", "L", 8, 5, 40, "forward")
         # self.forward.id = self.forward_id
         # (self.forward).set_id(self.forward_id)
         
-        self.goalie = PlayerGoalie("Roberto", "Luongo", 190.5, 215, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "goalie")
+        self.goalie = PlayerGoalie("Roberto", "Luongo", 190.5, 215.0, 1, "Apr 4, 1979", 1997, 788, 83, 705, 30, 12, 13, "goalie")
         # self.goalie.id = self.goalie_id
         # (self.goalie).set_id(self.goalie_id)
         
