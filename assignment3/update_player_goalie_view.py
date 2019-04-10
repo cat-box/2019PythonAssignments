@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox as tkMessageBox
-from tkinter import *
+
 import json
 
 class UpdatePlayerGoalieView(tk.Frame):
@@ -10,6 +10,7 @@ class UpdatePlayerGoalieView(tk.Frame):
 
     def __init__(self, parent, close_popup_callback, update_player_callback, player_details):
         """ Initializer """
+
         tk.Frame.__init__(self, parent)
         self._parent = parent
         self.grid(rowspan=2, columnspan=2)
@@ -58,15 +59,15 @@ class UpdatePlayerGoalieView(tk.Frame):
                 break
 
         if self._field_check == 0:
-            self._message = messagebox.showinfo("Error", "Missing fields")
+            self._message = tkMessageBox.showinfo("Error", "Missing fields")
         else:
             self._values['player_type'] = self.TYPE_GOALIE
 
             player_string = self._update_player_callback(self._player_details['id'], self._values)
 
             if player_string is not None:
-                self._message = messagebox.showinfo("Sucess", "Player successfully updated! :D")
+                self._message = tkMessageBox.showinfo("Sucess", "Player successfully updated! :D")
                 self._close_popup_callback()
             else:
-                self._message = messagebox.showinfo("Error", "Player was not updated :c")
+                self._message = tkMessageBox.showinfo("Error", "Player was not updated :c")
                 self._close_popup_callback()

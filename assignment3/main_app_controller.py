@@ -24,8 +24,8 @@ class MainAppController(tk.Frame):
         tk.Frame.__init__(self, parent)
 
         self._top_navbar = TopNavbarView(self, self._page_callback)
-        self._page1 = Page1View(self, self._page1_submit_callback, self._get_players_of_type, self._get_player, self._page_add_callback, self._delete_player, self._page_update_callback)
-        self._page2 = Page2View(self, self._page2_submit_callback, self._get_players_of_type, self._get_player, self._page_add_callback, self._delete_player, self._page_update_callback)
+        self._page1 = Page1View(self, self._get_players_of_type, self._get_player, self._page_add_callback, self._delete_player, self._page_update_callback, self._display_details)
+        self._page2 = Page2View(self, self._get_players_of_type, self._get_player, self._page_add_callback, self._delete_player, self._page_update_callback, self._display_details)
         self._bottom_navbar = BottomNavbarView(self, self._quit_callback)
 
         self._top_navbar.grid(row=0, columnspan=4, pady=10)
@@ -79,14 +79,6 @@ class MainAppController(tk.Frame):
         elif player_type == self.TYPE_GOALIE:
             self._popup = UpdatePlayerGoalieView(self._popup_win, self._close_popup_callback, self._update_player, player_data)
 
-    def _page1_submit_callback(self):
-        print("Submit Page 1")
-        print(self._page1.get_form_data())
-
-    def _page2_submit_callback(self):
-        print("Submit Page 2")
-        print(self._page2.get_form_data())
-
     def _quit_callback(self):
         self.quit()
 
@@ -94,9 +86,14 @@ class MainAppController(tk.Frame):
         response = requests.get("http://127.0.0.1:5000/team/players/%s" % player_id) 
 
         if response.status_code is 200:
-            self._popup_win = tk.Toplevel()
-            self._popup_win.title('Player Detail')
-            self._popup = DetailPlayerView(self._popup_win, self._close_popup_callback, response.json())
+            return response.json()
+            
+
+    def _display_details(self, player_detail):
+        self._popup_win = tk.Toplevel()
+        self._popup_win.title('Player Detail')
+        self._popup = DetailPlayerView(self._popup_win, self._close_popup_callback, player_detail)
+
 
     def _get_players_of_type(self, player_type):
         response = requests.get("http://127.0.0.1:5000/team/players/all/%s" % player_type)

@@ -49,33 +49,6 @@ class PlayerGoalie(AbstractPlayer):
 
         super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type)
 
-    
-    def set_win_loss_stats(self, wins, losses, games_played):
-        """Sets win/loss stats of player
-        
-        Args:
-            wins (int): Value for player's number of wins
-            losses (int): Value for player's number of losses
-            games_played (int): Value for player's number of total games played
-        """
-        self._validate_input(wins, "wins")
-        self._games_won = wins
-
-        self._validate_input(losses, "losses")
-        self._games_lost = losses
-
-        self._validate_input(games_played, "games_played")
-        self._games_played = games_played
-
-
-    def get_type(self):
-        """Gets player's type
-        
-        Returns:
-            PLAYER_TYPE (string): Player's type ("Goalie")
-        """
-        return self.PLAYER_TYPE
-
 
     def to_dict(self):
         """ Returns a Python dictionary representation of data held in player_goalie

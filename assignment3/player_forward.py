@@ -45,15 +45,6 @@ class PlayerForward(AbstractPlayer):
 
         super().__init__(fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type)
 
-
-    def get_type(self):
-        """Gets player's type
-        
-        Returns:
-            PLAYER_TYPE (string): Player's type ("Forward")
-        """
-        return self.PLAYER_TYPE
-
     
     def to_dict(self):
         """Returns dictionary representation of JSON object (PlayerForward)

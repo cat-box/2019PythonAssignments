@@ -28,7 +28,7 @@ class DetailPlayerView(tk.Frame):
         self._title.grid(row=0, padx=20, columnspan=2)
 
         for key, value in self._player_details.items():
-            self._field = tk.Label(self, text=key)
+            self._field = tk.Label(self, text=key, font=('TkDefaultFont', 9, 'bold'))
             self._field.grid(row=i, column=0, sticky="W", pady=3, padx=10)
 
             self._field2 = tk.Label(self, text=value)
@@ -38,31 +38,3 @@ class DetailPlayerView(tk.Frame):
 
         tk.Button(self, text="Exit", command=self._close_popup_callback).grid(
             row=16, column=0, pady=5, columnspan=2)
-
-    def update_player(self):
-        self._values = {}
-        self._field_check = 1
-
-        for i, entry in enumerate(self._entries, 0):
-            value = entry.get()
-            self._values[self._fields[i]] = value
-            if value == '':
-                self._field_check = 0
-                break
-
-        if self._field_check == 0:
-            self._message = messagebox.showinfo("Error", "Missing fields")
-        else:
-            self._values['player_type'] = self.TYPE_GOALIE
-
-            player_string = self._update_player_callback(
-                self._player_details['id'], self._values)
-
-            if player_string is not None:
-                self._message = messagebox.showinfo(
-                    "Sucess", "Player successfully updated! :D")
-                self._close_popup_callback()
-            else:
-                self._message = messagebox.showinfo(
-                    "Error", "Player was not updated :c")
-                self._close_popup_callback()

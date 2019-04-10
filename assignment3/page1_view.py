@@ -8,18 +8,18 @@ class Page1View(tk.Frame):
 
     TYPE_FORWARD = "forward"
 
-    def __init__(self, parent, submit_callback, get_players_callback, get_player_detail_callback, add_player_callback, delete_player_callback, update_player_callback):
+    def __init__(self, parent, get_players_callback, get_player_detail_callback, add_player_callback, delete_player_callback, update_player_callback, display_details_callback):
         """ Initialize Page 1 """
 
         tk.Frame.__init__(self, parent, width=800, height=800)
         self._parent = parent
 
-        self._submit_callback = submit_callback
         self._get_players_callback = get_players_callback
         self._get_player_detail_callback = get_player_detail_callback
         self._add_player_callback = add_player_callback
         self._delete_player_callback = delete_player_callback
         self._update_player_callback = update_player_callback
+        self._display_details_callback = display_details_callback
 
         self._create_widgets()
 
@@ -69,7 +69,7 @@ class Page1View(tk.Frame):
     def get_data(self):
         player_id = self.get_id()
         details = self._get_player_detail_callback(player_id)
-        self.popupmsg(details, '%s: %s %s' % (details['id'], details['fname'], details['lname']))
+        self._display_details_callback(details)
 
     def delete_player(self):
         player_id = self.get_id()
@@ -84,17 +84,6 @@ class Page1View(tk.Frame):
 
     def update_player(self):
         player_id = self.get_id()
-
         player_detail = self._get_player_detail_callback(player_id)
-
         self._update_player_callback(player_detail)
-
-    def popupmsg(self, message, player):
-        popup = tk.Toplevel(self)
-        popup.wm_title("Player Details")
-        popup.tkraise(self)
-
-        tk.Label(self, text=player, font=20)
-
-        tk.Label(popup, text=json.dumps(message, indent=4), anchor=W, justify="left").pack(side="top", fill="x", pady=10)
-        tk.Button(popup, text="OK", command = popup.destroy).pack()
+        self.refresh()

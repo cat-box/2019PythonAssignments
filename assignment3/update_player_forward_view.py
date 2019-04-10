@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox as tkMessageBox
-from tkinter import *
+
 import json
 
 class UpdatePlayerForwardView(tk.Frame):
@@ -49,17 +49,25 @@ class UpdatePlayerForwardView(tk.Frame):
 
     def update_player(self):
         self._values = {}
-
+        self._field_check = 1
+        
         for i, entry in enumerate(self._entries, 0):
             value = entry.get()
             self._values[self._fields[i]] = value
+            if value == '':
+                self._field_check = 0
+                break
 
-        self._values['player_type'] = self.TYPE_FORWARD
-        player_string = self._update_player_callback(self._player_details['id'], self._values)
-
-        if player_string is not None:
-            self._message = messagebox.showinfo("Sucess", "Player successfully updated! :D")
-            self._close_popup_callback()
+        if self._field_check == 0:
+            self._message = tkMessageBox.showinfo("Error", "Missing fields")
         else:
-            self._message = messagebox.showinfo("Error", "Player was not updated :c")
-            self._close_popup_callback()
+            self._values['player_type'] = self.TYPE_FORWARD
+
+            player_string = self._update_player_callback(self._player_details['id'], self._values)
+
+            if player_string is not None:
+                self._message = tkMessageBox.showinfo("Sucess", "Player successfully updated! :D")
+                self._close_popup_callback()
+            else:
+                self._message = tkMessageBox.showinfo("Error", "Player was not updated :c")
+                self._close_popup_callback()

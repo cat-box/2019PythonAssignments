@@ -58,25 +58,7 @@ class AbstractPlayer(Base):
 
         self._validate_player_type(player_type)
         self.player_type = player_type.lower()
-
-
-    def get_stats(self):
-        """Abstract method to be implemented by subclasses
         
-        Raises:
-            NotImplementedError
-        """
-        raise NotImplementedError("Abstract method - must be implemented in subclass")
-
-
-    def get_type(self):
-        """Abstract method to be implemented by subclasses
-        
-        Raises:
-            NotImplementedError
-        """
-        raise NotImplementedError("Abstract method - must be implemented in subclass")
-
 
     def to_dict(self):
         """Abstract method to be implemented by subclasses
