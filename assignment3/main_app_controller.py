@@ -9,6 +9,7 @@ from add_player_forward_view import AddPlayerForwardView
 from add_player_goalie_view import AddPlayerGoalieView
 from update_player_forward_view import UpdatePlayerForwardView
 from update_player_goalie_view import UpdatePlayerGoalieView
+from detail_player_view import DetailPlayerView
 import requests
 import json
 
@@ -93,7 +94,9 @@ class MainAppController(tk.Frame):
         response = requests.get("http://127.0.0.1:5000/team/players/%s" % player_id) 
 
         if response.status_code is 200:
-            return(response.json())
+            self._popup_win = tk.Toplevel()
+            self._popup_win.title('Player Detail')
+            self._popup = DetailPlayerView(self._popup_win, self._close_popup_callback, response.json())
 
     def _get_players_of_type(self, player_type):
         response = requests.get("http://127.0.0.1:5000/team/players/all/%s" % player_type)

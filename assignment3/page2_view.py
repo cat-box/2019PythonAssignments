@@ -45,7 +45,6 @@ class Page2View(tk.Frame):
         self._update_player = tk.Button(self, text="Update", command=self.update_player)
         self._update_player.grid(row=7)
 
-
     def refresh(self):
         self._listbox.destroy()
         self._listbox = tk.Listbox(self, width=35)
@@ -69,7 +68,7 @@ class Page2View(tk.Frame):
     def get_data(self):
         player_id = self.get_id()
         details = self._get_player_detail_callback(player_id)
-        self.popupmsg(details)
+        
 
     def delete_player(self):
         player_id = self.get_id()
@@ -87,15 +86,3 @@ class Page2View(tk.Frame):
         player_detail = self._get_player_detail_callback(player_id)
         self._update_player_callback(player_detail)
         self.refresh()
-
-
-    def popupmsg(self, message, player):
-        popup = tk.Toplevel(self)
-        popup.wm_title("Player Details")
-        popup.tkraise(self)
-
-        tk.Label(self, text=player, font=20)
-
-        tk.Label(popup, text=json.dumps(message, indent=4), anchor=W, justify="left").pack(side="top", fill="x", pady=10)
-        tk.Button(popup, text="OK", command = popup.destroy).pack()
-        
