@@ -208,10 +208,10 @@ class TestTeam(TestCase):
         list_players_goalie = self.team.get_all_by_type(self.PLAYER_TYPE_GOALIE)
 
         self.assertEqual(len(list_players_forward), 1)
-        self.assertEqual(list_players_forward[0].get_type(), "forward", "Player must have Player Type Forward")
+        self.assertEqual(list_players_forward[0].player_type, "forward", "Player must have Player Type Forward")
 
         self.assertEqual(len(list_players_goalie), 1)
-        self.assertEqual(list_players_goalie[0].get_type(), "goalie", "Player must have Player Type Goalie")
+        self.assertEqual(list_players_goalie[0].player_type, "goalie", "Player must have Player Type Goalie")
 
 
     def test_get_all_by_type_invalid_player_type(self):

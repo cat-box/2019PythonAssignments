@@ -28,8 +28,8 @@ class MainAppController(tk.Frame):
         self._page2 = Page2View(self, self._get_players_of_type, self._get_player, self._page_add_callback, self._delete_player, self._page_update_callback, self._display_details)
         self._bottom_navbar = BottomNavbarView(self, self._quit_callback)
 
-        self._top_navbar.grid(row=0, columnspan=4, pady=10)
-        self._page1.grid(row=1, columnspan=4, pady=10)
+        self._top_navbar.grid(row=0, columnspan=4)
+        self._page1.grid(row=1, columnspan=4, pady=10, padx=20)
         self._curr_page = TopNavbarView.PAGE1
         # Hide Page 2 by default
         self._bottom_navbar.grid(row=2, columnspan=4, pady=10)
@@ -43,12 +43,12 @@ class MainAppController(tk.Frame):
         curr_page = self._top_navbar.curr_page.get()
         if (self._curr_page != curr_page and self._curr_page == TopNavbarView.PAGE1):
             self._page1.grid_forget()
-            self._page2.grid(row=1, columnspan=4)
+            self._page2.grid(row=1, columnspan=4, pady=10, padx=20)
             self._curr_page = TopNavbarView.PAGE2
             
         elif (self._curr_page != curr_page and self._curr_page == TopNavbarView.PAGE2):
             self._page2.grid_forget()
-            self._page1.grid(row=1, columnspan=4)
+            self._page1.grid(row=1, columnspan=4, pady=10, padx=20)
             self._curr_page = TopNavbarView.PAGE1
 
         self._get_players_of_type(self.TYPE_FORWARD)

@@ -1,4 +1,4 @@
-from sqlalchemy import Column, Integer, String
+from sqlalchemy import Column, Integer, String, Float
 from base import Base
 
 
@@ -36,27 +36,35 @@ class AbstractPlayer(Base):
         self._id = None
 
         self._validate_input(fname, "fname")
+        self._validate_string(fname, "fname")
         self.fname = fname
 
         self._validate_input(lname, "lname")
+        self._validate_string(lname, "lname")
         self.lname = lname
 
         self._validate_input(height, "height")
+        self._validate_int(height, "height")
         self.height = height
 
         self._validate_input(weight, "weight")
+        self._validate_int(weight, "weight'")
         self.weight = weight
 
         self._validate_input(jersey_num, "jersey_num")
+        self._validate_int(jersey_num, "jersey_num")
         self.jersey_num = jersey_num
 
         self._validate_input(date_birth, "date_birth")
+        self._validate_string(date_birth, "date_birth")
         self.date_birth = date_birth
 
         self._validate_input(year_joined, "year_joined")
+        self._validate_int(year_joined, "year_joined")
         self.year_joined = year_joined
 
         self._validate_player_type(player_type)
+        self._validate_string(player_type, "player_type")
         self.player_type = player_type.lower()
         
 
@@ -104,3 +112,35 @@ class AbstractPlayer(Base):
             return
         else:
             raise ValueError("Player Type must be Forward or Goalie")
+
+    
+    @staticmethod
+    def _validate_string(input, input_display):
+        """Private method to check if input is string-type
+        
+        Args:
+            input: Input to be checked
+            input_display (string): String used in ValueError message
+        
+        Raises:
+            ValueError: If input is not of string-type
+        """
+
+        if type(input) != str:
+            raise ValueError("%s must be a string" % (input_display))
+    
+
+    @staticmethod 
+    def _validate_number(input, input_display):
+        """Private method to check if input is a number-type
+        
+        Args:
+            input: Input to be checked
+            input_display (string): String used in ValueError message
+        
+        Raises:
+            ValueError: If input is not of int- or float-type
+        """
+
+        if type(input) != int or type(input) != float:
+            raise ValueError("%s must be an int or float" % (input_display))

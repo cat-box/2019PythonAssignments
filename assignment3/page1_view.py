@@ -25,40 +25,43 @@ class Page1View(tk.Frame):
 
     def _create_widgets(self):
         """ Creates the widgets for Page 1 """
-        self._title = tk.Label(self, text="Team", font=20)
-        self._title.grid(row=1, padx=20)
+        self._title = tk.Label(self, text="Forwards", font=20)
+        self._title.grid(row=1, columnspan=5, padx=20)
 
         self._listbox = tk.Listbox(self, width=35)
-        self._listbox.grid(row=2, sticky=W)
+        self._listbox.grid(row=2, columnspan=5)
 
         self._refresh_button = tk.Button(self, text="Refresh", command=self.refresh)
-        self._refresh_button.grid(row=3)
+        self._refresh_button.grid(row=3, column=0, pady=5, padx=2)
 
         self._get_details = tk.Button(self, text="Details", command=self.get_data)
-        self._get_details.grid(row=4)
+        self._get_details.grid(row=3, column=1, pady=5, padx=2)
 
         self._add_player = tk.Button(self, text="Add", command=lambda:self._add_player_callback(self.TYPE_FORWARD))
-        self._add_player.grid(row=5)
+        self._add_player.grid(row=3, column=2, pady=5, padx=2)
 
         self._delete_player = tk.Button(self, text="Delete", command=self.delete_player)
-        self._delete_player.grid(row=6)
+        self._delete_player.grid(row=3, column=3, pady=5, padx=2)
 
         self._update_player = tk.Button(self, text="Update", command=self.update_player)
-        self._update_player.grid(row=7)
+        self._update_player.grid(row=3, column=4, pady=5, padx=2)
 
     def refresh(self):
         self._listbox.destroy()
         self._listbox = tk.Listbox(self, width=35)
-        self._listbox.grid(row=2, sticky=W)
+        self._listbox.grid(row=2, columnspan=5)
 
         self._get_players_callback(self.TYPE_FORWARD)
 
     def get_id(self):
         selection = self._listbox.curselection()
-        value = self._listbox.get(selection[0])
-        p_id = re.findall(r"[0-9]", value)
-        player_id = ''.join(p_id)
-        return player_id
+        if selection == ():
+            self._message = tkMessageBox.showinfo("Error", "Please select a player")
+            return 'none selected'
+        else:
+            value = self._listbox.get(selection[0])
+            player_id = value[0:13]
+            return player_id
 
     def set_form_data(self, players_list):
         self._listbox.delete(0, tk.END)
@@ -68,22 +71,27 @@ class Page1View(tk.Frame):
 
     def get_data(self):
         player_id = self.get_id()
-        details = self._get_player_detail_callback(player_id)
-        self._display_details_callback(details)
+
+        if player_id != 'none selected':
+            details = self._get_player_detail_callback(player_id)
+            self._display_details_callback(details)
 
     def delete_player(self):
         player_id = self.get_id()
 
-        if tkMessageBox.askyesno('Verify', 'Really delete?'):
-            status_code = self._delete_player_callback(player_id)
-            if status_code == 200:
-                self._message = tkMessageBox.showinfo("Sucess", "Player successfully deleted! :D")
-            else:
-                self._message = tkMessageBox.showinfo("Error", "Player was not deleted! :c")
-            self.refresh()
+        if player_id != 'none selected':
+            if tkMessageBox.askyesno('Verify', 'Really delete?'):
+                status_code = self._delete_player_callback(player_id)
+                if status_code == 200:
+                    self._message = tkMessageBox.showinfo("Sucess", "Player successfully deleted! :D")
+                else:
+                    self._message = tkMessageBox.showinfo("Error", "Player was not deleted! :c")
+                self.refresh()
 
     def update_player(self):
         player_id = self.get_id()
-        player_detail = self._get_player_detail_callback(player_id)
-        self._update_player_callback(player_detail)
-        self.refresh()
+        
+        if player_id != 'none selected':
+            player_detail = self._get_player_detail_callback(player_id)
+            self._update_player_callback(player_detail)
+            self.refresh()

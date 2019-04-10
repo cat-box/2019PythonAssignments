@@ -26,19 +26,25 @@ class PlayerForward(AbstractPlayer):
             assists (int): Number of assists 
             total_shots (int): Total number of shots taken 
         """
+        
         self._validate_input(zone, "zone")
+        self._validate_string(fname, "fname")        
         self.zone = zone
 
         self._validate_input(shooting_hand, "shooting_hand")
+        self._validate_string(shooting_hand, "shooting_hand")
         self.shooting_hand = shooting_hand
 
         self._validate_input(goals, "goals")
+        self._validate_int(goals, "goals")
         self.goals = goals
 
         self._validate_input(assists, "assists")
+        self._validate_int(assists, "assists")
         self.assists = assists
     
         self._validate_input(total_shots, "total_shots")
+        self._validate_int(total_shots, "total_shots")
         self.total_shots = total_shots
 
         self._validate_player(player_type)
