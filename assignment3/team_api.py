@@ -18,6 +18,7 @@ PLAYER_TYPE_GOALIE = "goalie"
 @app.route('/team/players', methods=['POST'])
 def add_player():
     """ Adds a player to the team """
+
     content = request.json
 
     try:
@@ -56,6 +57,7 @@ def add_player():
 @app.route("/team/players/<int:player_id>", methods=["PUT"])
 def update_player(player_id):
     """ Updates player's attributes """
+
     content = request.json
 
     try:
@@ -90,6 +92,7 @@ def update_player(player_id):
 @app.route("/team/players/<int:player_id>", methods=["DELETE"])
 def remove_player(player_id):
     """ Removes player """
+
     try:
         team.delete(player_id)
 
@@ -109,6 +112,7 @@ def remove_player(player_id):
 @app.route("/team/players/<int:player_id>", methods=["GET"])
 def get_player(player_id):
     """ Gets player by player_id """
+
     try:
         player = team.get_player(player_id)
         
@@ -129,6 +133,7 @@ def get_player(player_id):
 @app.route("/team/players/all", methods=["GET"])
 def get_all_players():
     """ Gets all players in team """
+
     players = team.get_all_players()
 
     player_list = []
@@ -148,6 +153,7 @@ def get_all_players():
 @app.route("/team/players/all/<player_type>", methods=["GET"])
 def get_players_of_type(player_type):
     """ Gets all players of a type """
+    
     try:
         players_of_type = team.get_all_by_type(player_type)
 

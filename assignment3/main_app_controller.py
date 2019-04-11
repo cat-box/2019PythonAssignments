@@ -88,12 +88,10 @@ class MainAppController(tk.Frame):
         if response.status_code is 200:
             return response.json()
             
-
     def _display_details(self, player_detail):
         self._popup_win = tk.Toplevel()
         self._popup_win.title('Player Detail')
         self._popup = DetailPlayerView(self._popup_win, self._close_popup_callback, player_detail)
-
 
     def _get_players_of_type(self, player_type):
         response = requests.get("http://127.0.0.1:5000/team/players/all/%s" % player_type)

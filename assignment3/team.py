@@ -13,12 +13,19 @@ class Team:
     PLAYER_TYPE_FORWARD = "forward"
     PLAYER_TYPE_GOALIE = "goalie"
 
+
     def __init__(self, db_filename):
-        """ Constructor method for Team """
+        """Constructor method for Team
+        
+        Args:
+            db_filename (string): File name of database used for Team class
+        
+        Raises:
+            ValueError: If db_file name is an invalid input
+        """
 
         if db_filename is None or db_filename == "":
             raise ValueError("Invalid Database File")
-
 
         engine = create_engine('sqlite:///' + db_filename)
 
@@ -28,12 +35,11 @@ class Team:
 
 
     def add(self, player_obj):
-        """Adds player to list of team players if id doesn't exist in list
-           Generates an id for the player on successful add, then returns that id
-           Then, writes a dictionary representation of the player to file
+        """Adds Player to players database if one with same id doesn't already exist
+           Generates an id for the Player on successful add, then returns that id
 
         Args:
-            player_obj (PlayerForward or PlayerGoalie): Either a forward or goalie class
+            player_obj (PlayerForward or PlayerGoalie): Either a Forward or Goalie class
         
         Returns:
             _id (int): id that is generated on successful add
@@ -57,10 +63,13 @@ class Team:
 
 
     def create_id(self, player_obj):
-        """ Creates an id for a player
+        """Creates id and assigns it to Player object
+        
+        Args:
+            player_obj (PlayerForward or PlayerGoalie): Either a Forward or Goalie class
         
         Returns:
-            player_id (int): id of a player object
+            player_id (int): id of player that is created
         """
 
         self._validate_object(player_obj)
@@ -72,15 +81,17 @@ class Team:
 
 
     def delete(self, player_id):
-        """Deletes player from list if id doesn't exist in list
-           Iterates through list to match the given player_id, then removes it
+        """Deletes Player from players database
+           Queries database for a Player with inputted id, and then deletes it if one is found
         
         Args:
-            player_id (int): Player id that is used to remove player from list
+            player_id (int): Player id that is used for query
         
         Raises:
-            ValueError: If player_id is not in _team_players list
+            ValueError: If a player with player_id is not found
+            ValueError: If inputted id does not exist in database entries
         """
+
 
         self._validate_parameter(player_id, "Player ID")
 
@@ -103,13 +114,13 @@ class Team:
 
 
     def get_player(self, player_id):
-        """Returns player object if player's id is in list
+        """Returns Player object if Player's id is in database
         
         Args:
-            player_id (int): Player id of player to return
+            player_id (int): id that is used to query database
         
         Returns:
-            player (PlayerForward or PlayerGoalie): Player object that is returned
+            existing_player: Player object that matches with inputted id
         """
 
         self._validate_parameter(player_id, "Player ID")
@@ -140,11 +151,10 @@ class Team:
 
 
     def get_all_players(self):
-        """Returns a list containing the Player objects that are stored in it
-           An empty list is returned if there's nothing in _team_players
+        """Returns a list containing all Player objects in database
         
         Returns:
-            _team_players (list): List of Player objects
+            _team_players (list): List of Player objects in database
         """
 
         session = self._db_session()
@@ -166,7 +176,7 @@ class Team:
 
 
     def get_all_by_type(self, player_type):
-        """Returns a list of players of a certain type (forward or goalie)
+        """Returns a list of Players of a certain type (either Forward or Goalie)
         
         Args:
             player_type (string): Type of player (either "forward" or "goalie")
@@ -193,15 +203,15 @@ class Team:
 
 
     def update(self, player_obj):
-        """Updates list to replace a Player object with new Player object through their id
-           Then, calls _write_player_to_file() to update the file that contains the
-           representations of player objects
+        """Updates a Player in database
+           The id of the Player is used to query the database for its respective entry
 
         Args:
-            player_obj (PlayerForward or PlayerGoalie): Player object to replace
+            player_obj (PlayerForward or PlayerGoalie): Player to update
         
         Raises:
-            ValueError: If player_id is not in list of players
+            ValueError: If id of Player does not exist in database
+            ValueError: If Player with given id does not exist in database
         """
 
         self._validate_object(player_obj)
@@ -230,7 +240,8 @@ class Team:
 
 
     def _player_exists(self, player_id):
-        """Private method to check if player exists in _team_players
+        """Private method to check if player exists in database
+           Player's id is used to query the database to see if its entry exists
         
         Args:
             player_id (int): Player's id to be checked
@@ -260,7 +271,7 @@ class Team:
             obj (obj): Input to be validated
         
         Raises:
-            ValueError: If obj is undefined
+            ValueError: If obj is None, or is neither a Forward or Goalie
         """
         if obj is None or not (isinstance(obj, PlayerForward) or isinstance(obj, PlayerGoalie)):
             raise ValueError("Player must be defined")

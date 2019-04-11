@@ -9,7 +9,7 @@ class PlayerForward(AbstractPlayer):
     
     PLAYER_TYPE = "forward"
 
-    zone = Column(String(25))
+    zone = Column(String(2))
     shooting_hand = Column(String(1))
     goals = Column(Integer)
     assists = Column(Integer)
@@ -28,23 +28,25 @@ class PlayerForward(AbstractPlayer):
         """
         
         self._validate_input(zone, "zone")
-        self._validate_string(fname, "fname")        
+        self._validate_string(zone, "zone")
+        self._validate_string_length(zone, "zone", 2)   
         self.zone = zone
 
         self._validate_input(shooting_hand, "shooting_hand")
         self._validate_string(shooting_hand, "shooting_hand")
+        self._validate_string_length(shooting_hand, "shooting_hand", 1)
         self.shooting_hand = shooting_hand
 
         self._validate_input(goals, "goals")
-        self._validate_int(goals, "goals")
+        self._validate_number(goals, "goals")
         self.goals = goals
 
         self._validate_input(assists, "assists")
-        self._validate_int(assists, "assists")
+        self._validate_number(assists, "assists")
         self.assists = assists
     
         self._validate_input(total_shots, "total_shots")
-        self._validate_int(total_shots, "total_shots")
+        self._validate_number(total_shots, "total_shots")
         self.total_shots = total_shots
 
         self._validate_player(player_type)
@@ -79,6 +81,7 @@ class PlayerForward(AbstractPlayer):
 
     def copy(self, object):
         """ Copies data from a PlayerForward object to this PlayerForward object """
+        
         if isinstance(object, PlayerForward):
             self.fname = object.fname
             self.lname = object.lname

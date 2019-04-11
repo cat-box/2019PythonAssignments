@@ -1,5 +1,6 @@
 from sqlalchemy import Column, Integer, String, Float
 from base import Base
+import re
 
 
 class AbstractPlayer(Base):
@@ -16,7 +17,7 @@ class AbstractPlayer(Base):
     jersey_num = Column(Integer, nullable=False)
     date_birth = Column(String(25), nullable=False)
     year_joined = Column(Integer, nullable=False)
-    player_type = Column(String(25), nullable=False)
+    player_type = Column(String(7), nullable=False)
 
 
     def __init__(self, fname, lname, height, weight, jersey_num, date_birth, year_joined, player_type):
@@ -37,36 +38,40 @@ class AbstractPlayer(Base):
 
         self._validate_input(fname, "fname")
         self._validate_string(fname, "fname")
+        self._validate_string_length(fname, "fname", 25)
         self.fname = fname
 
         self._validate_input(lname, "lname")
         self._validate_string(lname, "lname")
+        self._validate_string_length(lname, "lname", 25)
         self.lname = lname
 
         self._validate_input(height, "height")
-        self._validate_float(height, "height")
+        self._validate_number(height, "height")
         self.height = height
 
         self._validate_input(weight, "weight")
-        self._validate_float(weight, "weight")
+        self._validate_number(weight, "weight")
         self.weight = weight
 
         self._validate_input(jersey_num, "jersey_num")
-        self._validate_int(jersey_num, "jersey_num")
+        self._validate_number(jersey_num, "jersey_num")
         self.jersey_num = jersey_num
 
         self._validate_input(date_birth, "date_birth")
         self._validate_string(date_birth, "date_birth")
+        self._validate_string_length(date_birth, "date_birth", 25)
         self.date_birth = date_birth
 
         self._validate_input(year_joined, "year_joined")
-        self._validate_int(year_joined, "year_joined")
+        self._validate_number(year_joined, "year_joined")
         self.year_joined = year_joined
 
         self._validate_player_type(player_type)
         self._validate_string(player_type, "player_type")
+        self._validate_string_length(player_type, "player_type", 7)
         self.player_type = player_type.lower()
-        
+
 
     def to_dict(self):
         """Abstract method to be implemented by subclasses
@@ -90,6 +95,7 @@ class AbstractPlayer(Base):
             ValueError: If input is undefined
             ValueError: If input is empty
         """
+
         if input == None:
             raise ValueError(input_display + " cannot be undefined")
 
@@ -113,7 +119,7 @@ class AbstractPlayer(Base):
         else:
             raise ValueError("Player Type must be Forward or Goalie")
 
-    
+
     @staticmethod
     def _validate_string(input, input_display):
         """Private method to check if input is string-type
@@ -128,35 +134,30 @@ class AbstractPlayer(Base):
 
         if type(input) != str:
             raise ValueError("%s must be a string" % (input_display))
-    
 
-    @staticmethod 
-    def _validate_int(value, input_display):
-        """Private method to check if input is a int-type
-        
-        Args:
-            input: Input to be checked
-            input_display (string): String used in ValueError message
-        
-        Raises:
-            ValueError: If input is not of int-type
-        """
 
-        if type(value) != int:
-            raise ValueError("%s must be an int" % (input_display))
-
-    
     @staticmethod
-    def _validate_float(value, input_display):
-        """Private method to check if input is a float-type
-        
+    def _validate_string_length(input, input_display, max_length):
+
+        if len(input) > max_length:
+            raise ValueError("%s must have %s characters or less" % (input_display, max_length))
+
+
+    @staticmethod
+    def _validate_number(input, input_display):
+        """Private method to check if input is a number
+
         Args:
             input: Input to be checked
             input_display (string): String used in ValueError message
-        
+
         Raises:
-            ValueError: If input is not a float-type
+            ValueError: If input is not a number
         """
 
-        if type(value) != float:
-            raise ValueError("%s must be a float" % (input_display))
+        input_str = str(input)
+
+        if (re.match('^[0-9\.]*$', input_str)) or (type(input) == int) or (type(input) == float):
+            return
+        else:
+            raise ValueError("%s must be a number" % (input_display))

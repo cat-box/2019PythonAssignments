@@ -56,8 +56,8 @@ class AddPlayerGoalieView(tk.Frame):
         player_string = self._add_player_callback(self._values)
 
         if player_string is not None:
-            self._message = messagebox.showinfo("Sucess", "Player successfully added! :D")
+            self._message = tkMessageBox.showinfo("Sucess", "Player successfully added! :D")
             self._close_popup_callback()
         else:
-            self._message = messagebox.showinfo("Error", "Player was not added :c")
+            self._message = tkMessageBox.showinfo("Error", "Player was not added :c")
             self._close_popup_callback()
